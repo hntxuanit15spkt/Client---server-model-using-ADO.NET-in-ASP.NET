@@ -143,9 +143,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\SanPhamController.cs" />
     <Compile Include="DAL\Config.cs" />
-    <Compile Include="DAL\DataProvider.cs" />
     <Compile Include="DAL\SqlHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,6 +267,9 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\Show.cshtml" />
     <Content Include="Views\Home\DangKy.cshtml" />
+    <Content Include="Views\SanPham\Insert.cshtml" />
+    <Content Include="Views\SanPham\Index.cshtml" />
+    <Content Include="Views\Home\Show.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
