@@ -11,7 +11,9 @@ namespace DAL
     public class SqlHelper
     {
         private static SqlHelper instance = null;
-        public static SqlHelper Intance { get => (instance == null) ? new SqlHelper() : instance; }
+        public static SqlHelper Intance {
+            get => (instance == null) ? new SqlHelper() : instance;
+        }
         private static SqlConnection conn;
         //private static string connectionString = @"Data Source=.\;Initial Catalog=quanlysinhvien2;Integrated Security=True";
         private static string connectionString = @"Data Source=(local);Initial Catalog=QuanLyThuVien;Integrated Security=True";

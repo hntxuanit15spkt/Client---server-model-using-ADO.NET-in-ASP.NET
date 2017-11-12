@@ -1,22 +1,19 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-
+﻿
 @{
-  ViewBag.Title = "Index";
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Nhập thông tin máy server";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Thông tin máy server</h2>
 <form action="/home/show" method="post">
-  IP Address: <input type="text" name="ip" /><br />
-  Databasename: <input type="text" name="Databasename" /><br />
-  Username: <input type="text" name="usr" /><br />
-  Password: <input type="text" name="pwd" /><br />
-  <button>Show</button>
+    IP Address: <input type="text" name="ip" /><br />
+    Databasename: <input type="text" name="Databasename" /><br />
+    Username: <input type="text" name="usr" /><br />
+    Password: <input type="text" name="pwd" /><br />
+    <button>Show</button>
 </form>
 @section scripts{
-  <script>
+    <script>
     $(function () {
       var value = '@TempData["result"]';
       if (value != '')
@@ -24,5 +21,5 @@
         toastr.error(value);
       }
     });
-  </script>
+    </script>
 }

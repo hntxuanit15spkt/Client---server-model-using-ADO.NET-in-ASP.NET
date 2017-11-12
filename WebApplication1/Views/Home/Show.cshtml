@@ -1,52 +1,50 @@
 ﻿
-
-@*@model List<WebApplication1.Models.SanPham>*@
 @{
-  ViewBag.Title = "Show";
-  Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Show";
+    Layout = "~/Views/Layout/HomeLayout.cshtml";
 }
 
 <center>
-  <h2>Danh sách các database trong server này</h2>
-  <a href="@Url.Action("Insert","Home")" class="btn btn-success">Thêm</a>
-  <a href="@Url.Action("DisConnect","Home")" class="btn btn-success">Ngắt kết nối</a>
+    <h2>Danh sách các database trong server này</h2>
+    <a href="@Url.Action("Insert","Home")" class="btn btn-success">Thêm</a>
+    <a href="@Url.Action("DisConnect","Home")" class="btn btn-success">Ngắt kết nối</a>
 </center>
 Đã vô được rồi nè, Ahihi
 @*<table class="table table-bordered table-bordered">
-  <thead>
-    <tr>
-      <td>ID</td>
-      <td>TenSP</td>
-      <td>Công Cụ</td>
-    </tr>
-  </thead>
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>TenSP</td>
+        <td>Công Cụ</td>
+      </tr>
+    </thead>
 
-  <tbody>*@
+    <tbody>*@
 
 
 @*@if (Model.Any())
-  {
-    foreach (var item in Model)
+    {
+      foreach (var item in Model)
+      {
+        <tr>
+          <td>@item.MaSP</td>
+          <td>@item.TenSP</td>
+          <td><a href="@Url.Action("Update", "test", new WebApplication1.Models.SanPham { MaSP=item.MaSP,TenSP=item.TenSP})" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i></a> | <a href="/test/Delete/@item.MaSP" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i></a></td>
+        </tr>
+      }
+    }
+    else
     {
       <tr>
-        <td>@item.MaSP</td>
-        <td>@item.TenSP</td>
-        <td><a href="@Url.Action("Update", "test", new WebApplication1.Models.SanPham { MaSP=item.MaSP,TenSP=item.TenSP})" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-edit"></i></a> | <a href="/test/Delete/@item.MaSP" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i></a></td>
+        <td colspan="2">Chưa có sản phẩm nào</td>
       </tr>
-    }
-  }
-  else
-  {
-    <tr>
-      <td colspan="2">Chưa có sản phẩm nào</td>
-    </tr>
-  }*@
+    }*@
 
 
 @*</tbody>
-  </table>*@
+    </table>*@
 @section scripts{
-  <script>
+    <script>
     $(function () {
          var value1 = '@TempData["results"]';
       if (value1 != '')
@@ -59,5 +57,5 @@
       }
 
     });
-  </script>
+    </script>
 }
