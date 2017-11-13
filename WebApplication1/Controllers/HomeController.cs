@@ -54,15 +54,28 @@ namespace WebApplication1.Controllers
         {
             //var lstSP = db.SanPhams;
             Config cf = new Config(Connect.ConnectString);
-            List<SANPHAM> listSP = new List<SANPHAM>();
-            DataTable dtSP = cf.ExecuteQuery("select * from SanPham");
+            List<LOAISANPHAM> listLSP = new List<LOAISANPHAM>();
+            DataTable dtSP = cf.ExecuteQuery("select * from LOAISANPHAM");
             foreach (DataRow item in dtSP.Rows)
             {
-                SANPHAM sp = new SANPHAM(item);
-                listSP.Add(sp);
+                LOAISANPHAM lsp = new LOAISANPHAM(item);
+                listLSP.Add(lsp);
             }
-            return PartialView(listSP);
+            return PartialView(listLSP);
         }
+        //public ActionResult MenuPartial()
+        //{
+        //    //var lstSP = db.SanPhams;
+        //    Config cf = new Config(Connect.ConnectString);
+        //    List<SANPHAM> listSP = new List<SANPHAM>();
+        //    DataTable dtSP = cf.ExecuteQuery("select * from SanPham");
+        //    foreach (DataRow item in dtSP.Rows)
+        //    {
+        //        SANPHAM sp = new SANPHAM(item);
+        //        listSP.Add(sp);
+        //    }
+        //    return PartialView(listSP);
+        //}
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

@@ -11,8 +11,8 @@ namespace WebApplication1.DAL
     public class Config
     {
         private string ConnectString = "";
-        protected SqlConnection connect=new SqlConnection();
-        protected SqlCommand cmd=new SqlCommand();
+        protected SqlConnection connect = new SqlConnection();
+        protected SqlCommand cmd = new SqlCommand();
         public Config(string connectstr)
         {
             this.ConnectString = connectstr;
@@ -65,6 +65,7 @@ namespace WebApplication1.DAL
         public DataTable ExecuteQuery(string query, object[] parameter = null)
         {
             DataTable data = new DataTable();
+            data.Clear();
             connect = openConnection();
             SqlCommand command = new SqlCommand(query, connect);
             if (parameter != null)
@@ -81,9 +82,23 @@ namespace WebApplication1.DAL
                 }
             }
             SqlDataAdapter adapter = new SqlDataAdapter(command);
-            adapter.Fill(data);
+            DataSet ds = new DataSet();
+            adapter.Fill(ds);
+            data = ds.Tables[0];
             return data;
         }
+        //public DataSet ExecuteQuery(string strSQL, CommandType ct)
+        //{
+        //    if (connect.State == ConnectionState.Open)
+        //        connect.Close();
+        //    connect.Open();
+        //    cmd.CommandText = strSQL;
+        //    cmd.CommandType = ct;
+        //    SqlDataAdapter da = new SqlDataAdapter(cmd);
+        //    DataSet ds = new DataSet();
+        //    da.Fill(ds);
+        //    return ds;
+        //}
         //Trả về số dòng bị ảnh hưởng, thường dùng trong các stored
         public int ExecuteNonQuery(string query, object[] parameter = null)
         {
@@ -187,6 +202,6 @@ namespace WebApplication1.DAL
         //  connect.Close();
         //  return listsp;
         //}
-#endregion
+        #endregion
     }
 }
