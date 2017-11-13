@@ -19,7 +19,7 @@ namespace WebApplication1.Models
             if (!Convert.IsDBNull(red["DonGia"]))
                 this.DonGia = Convert.ToDecimal(red["DonGia"]);
             this.Mota = red["MoTa"].ToString();
-            this.Hinhanh = red["HinhAnh"].ToString();
+            this.HinhAnh = red["HinhAnh"].ToString();
             if (!Convert.IsDBNull(red["SoLuongTon"]))
                 this.SoLuongton = Convert.ToInt32(red["SoLuongTon"]);
             if (!Convert.IsDBNull(red["LuotXem"]))
@@ -41,7 +41,7 @@ namespace WebApplication1.Models
         public DateTime NgayCapNhat { get; set; }
         public decimal DonGia { get; set; }
         public string Mota { get; set; }
-        public string Hinhanh { get; set; }
+        public string HinhAnh { get; set; }
         public int SoLuongton { get; set; }
         public int LuotXem { get; set; }
         public int LuotBinhChon { get; set; }

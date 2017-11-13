@@ -55,10 +55,11 @@ namespace WebApplication1.Controllers
             //var lstSP = db.SanPhams;
             Config cf = new Config(Connect.ConnectString);
             List<LOAISANPHAM> listLSP = new List<LOAISANPHAM>();
+            LOAISANPHAM lsp = null;
             DataTable dtSP = cf.ExecuteQuery("select * from LOAISANPHAM");
             foreach (DataRow item in dtSP.Rows)
             {
-                LOAISANPHAM lsp = new LOAISANPHAM(item);
+                lsp = new LOAISANPHAM(item);
                 listLSP.Add(lsp);
             }
             return PartialView(listLSP);

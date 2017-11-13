@@ -8,13 +8,15 @@ using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models;
 using WebApplication1.Helper;
+using System.Data;
+using PagedList;
 
 namespace WebApplication1.Controllers
 {
     public class SanPhamController : Controller
     {
         // GET: Test
-       
+
         public SanPhamController()
         {
         }
@@ -93,12 +95,22 @@ namespace WebApplication1.Controllers
             }
             return RedirectToAction("Show", "test");
         }
-        public ActionResult LocSanPhamTheoLoai(string TenLoai)
+        public ActionResult DanhSachSanPhamTheoLoai(int MaLoaiSP/*, int? page*/)
         {
-            //trang show sản phẩm cho khách hàng==> Tìm kiếm
-            //
-            return View();
+            Config cf = new Config(Connect.ConnectString);
+            DataTable dt = cf.ExecuteQuery("select * from func_DanhSachSanPhamTheoLoai(" + MaLoaiSP + ")");
+            List<SANPHAM> listSP = new List<SANPHAM>();
+            SANPHAM sp =null;
+            foreach (DataRow dr in dt.Rows)
+            {
+                sp = new SANPHAM(dr);
+                listSP.Add(sp);
+            }
+            //int PageSize = 1;//số sản phẩm trên trang
+            //int PageNumber = (page ?? 1);//page không có giá trị thì PageNumber sẽ có giá trị là 1, số trang hiện tại
+            ViewBag.MaLoaiSP = MaLoaiSP;
+            //return View(listSP.ToPagedList(PageNumber, PageSize));
+            return View(listSP);
         }
     }
-
 }

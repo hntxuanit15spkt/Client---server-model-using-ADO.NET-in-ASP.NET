@@ -11,12 +11,17 @@ namespace WebSiteBanHang.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Data;
+
     public class LOAINGUOIDUNG
     {
         public int MaLoaiNguoiDung { get; set; }
         public string TenLoaiNguoiDung { get; set; }
         public virtual ICollection<NGUOIDUNG> NGUOIDUNGs { get; set; }
         public virtual ICollection<QUYENHANLOAINGUOIDUNG> QUYENHANLOAINGUOIDUNGs { get; set; }
+        public LOAINGUOIDUNG(DataRow row)
+        {
+
+        }
     }
 }

@@ -121,7 +121,7 @@ namespace WebApplication1.DAL
             data = command.ExecuteNonQuery();
             return data;
         }
-        //Trả về cột đầu tiên của dòng đầu tiên, thường dùng cho các function
+        //Trả về cột đầu tiên của dòng đầu tiên, dùng cho các function mà trả về giá trị
         public object ExecuteScalar(string query, object[] parameter = null)
         {
             object data = 0;
