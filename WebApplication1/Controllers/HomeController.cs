@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Helper;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
+
         public ActionResult Index()
         {
             return View();
@@ -17,7 +20,7 @@ namespace WebApplication1.Controllers
         public ActionResult Show(string ip, string Databasename, string usr, string pwd)
         {
             Connect.ConnectString = " Data Source=" + ip + ";Initial Catalog=" + Databasename + ";Integrated Security=False;User ID=" + usr + ";Password=" + pwd;
-           // Config cf = new Config(Connect.ConnectString);
+            // Config cf = new Config(Connect.ConnectString);
             //var list = new List<SanPham>();
             //var check = cf.Connection();
             if (Connect.CheckConnection())
@@ -47,12 +50,19 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-        //public ActionResult MenuPartial()
-        //{
-        //    //var lstSP = db.SanPhams;
-        //    var lstSP = 
-        //    return PartialView(lstSP);
-        //}
+        public ActionResult MenuPartial()
+        {
+            //var lstSP = db.SanPhams;
+            Config cf = new Config(Connect.ConnectString);
+            List<SANPHAM> listSP = new List<SANPHAM>();
+            DataTable dtSP = cf.ExecuteQuery("select * from SanPham");
+            foreach (DataRow item in dtSP.Rows)
+            {
+                SANPHAM sp = new SANPHAM(item);
+                listSP.Add(sp);
+            }
+            return PartialView(listSP);
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

@@ -22,9 +22,16 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        //public List<SanPham> ListAll(string sql)
+        //{
+        //    var lstSP = 
+        //    List < SanPham > = new ListAll()
+        //    List<SanPham> listsp = new List<SanPham>();
+        //    return listsp;
+        //}
         public ActionResult Delete(int id)
         {
-            var list = new List<SanPham>();
+            var list = new List<SANPHAM>();
             Config cf = new Config(Connect.ConnectString);
             //var check = cf.Connection();
             if (Connect.CheckConnection())
@@ -40,10 +47,10 @@ namespace WebApplication1.Controllers
             }
             return RedirectToAction("Show", "test");
         }
-        public ActionResult Update(SanPham sp)
+        public ActionResult Update(SANPHAM sp)
         {
             Config cf = new Config(Connect.ConnectString);
-            var list = new List<SanPham>();
+            var list = new List<SANPHAM>();
             var check = cf.Connection();
             if (check)
             {
@@ -69,7 +76,7 @@ namespace WebApplication1.Controllers
           int SoLuongton, int LuotXem, int LuotBinhChon, int MaLoaiSP, bool DaXoa, int MaSukien)
         {
             Config cf = new Config(Connect.ConnectString);
-            var list = new List<SanPham>();
+            var list = new List<SANPHAM>();
             var check = cf.Connection();
             if (check)
             {

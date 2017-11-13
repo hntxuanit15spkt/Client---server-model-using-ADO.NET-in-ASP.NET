@@ -11,8 +11,8 @@ namespace WebApplication1.DAL
     public class Config
     {
         private string ConnectString = "";
-        protected SqlConnection connect;
-        protected SqlCommand cmd;
+        protected SqlConnection connect=new SqlConnection();
+        protected SqlCommand cmd=new SqlCommand();
         public Config(string connectstr)
         {
             this.ConnectString = connectstr;
@@ -31,6 +31,123 @@ namespace WebApplication1.DAL
             }
 
         }
+        private SqlConnection openConnection()
+        {
+            if (connect.State == ConnectionState.Closed || connect.State == ConnectionState.Broken)
+            {
+                connect = new SqlConnection(ConnectString);
+                connect.Open();
+            }
+            return connect;
+        }
+        public void Insert(string sql)
+        {
+            cmd = new SqlCommand();
+            cmd.Connection = connect;
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+        public void Delete(string sql)
+        {
+            cmd = new SqlCommand();
+            cmd.Connection = connect;
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+        public void Update(string sql)
+        {
+            cmd = new SqlCommand();
+            cmd.Connection = connect;
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+        //Tham số thứ 2 (parameter) không điền vào cũng được
+        public DataTable ExecuteQuery(string query, object[] parameter = null)
+        {
+            DataTable data = new DataTable();
+            connect = openConnection();
+            SqlCommand command = new SqlCommand(query, connect);
+            if (parameter != null)
+            {
+                string[] listParam = query.Split(' ');
+                int i = 0;
+                foreach (string item in listParam)
+                {
+                    if (item.Contains('@'))
+                    {
+                        command.Parameters.AddWithValue(item, parameter[i]);
+                        i++;
+                    }
+                }
+            }
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            adapter.Fill(data);
+            return data;
+        }
+        //Trả về số dòng bị ảnh hưởng, thường dùng trong các stored
+        public int ExecuteNonQuery(string query, object[] parameter = null)
+        {
+            int data = 0;
+            connect = openConnection();
+            SqlCommand command = new SqlCommand(query, connect);
+            if (parameter != null)
+            {
+                string[] listParam = query.Split(' ');
+                int i = 0;
+                foreach (string item in listParam)
+                {
+                    if (item.Contains('@'))
+                    {
+                        command.Parameters.AddWithValue(item, parameter[i]);
+                        i++;
+                    }
+                }
+            }
+            data = command.ExecuteNonQuery();
+            return data;
+        }
+        //Trả về cột đầu tiên của dòng đầu tiên, thường dùng cho các function
+        public object ExecuteScalar(string query, object[] parameter = null)
+        {
+            object data = 0;
+            connect = openConnection();
+            SqlCommand command = new SqlCommand(query, connect);
+            if (parameter != null)
+            {
+                string[] listParam = query.Split(' ');
+                int i = 0;
+                foreach (string item in listParam)
+                {
+                    if (item.Contains('@'))
+                    {
+                        command.Parameters.AddWithValue(item, parameter[i]);
+                        i++;
+                    }
+                }
+            }
+            data = command.ExecuteScalar();
+            return data;
+        }
+        #region Tham khảo thêm
+        //public void Insert(SanPham sp)
+        //{
+        //  cmd = new SqlCommand();
+        //  cmd.Connection = connect;
+        //  cmd.CommandText = "Insert into sanpham values (@tensp,'5/6/2017',@dongia,@mota,@hinhanh,@Soluongton,@Luotxem,@luong,@maloaisp,@daxoa,'5/6/2017',@mask)";
+        //  cmd.Parameters.AddWithValue("@tensp", sp.TenSP ?? "");
+        //  // cmd.Parameters.AddWithValue("@ngaycapnhat", sp.NgayCapNhat);
+        //  cmd.Parameters.AddWithValue("@dongia", sp.DonGia);
+        //  cmd.Parameters.AddWithValue("@mota", sp.Mota ?? "");
+        //  cmd.Parameters.AddWithValue("@hinhanh", sp.Hinhanh);
+        //  cmd.Parameters.AddWithValue("@Soluongton", sp.SoLuongton);
+        //  cmd.Parameters.AddWithValue("@Luotxem", sp.LuotXem);
+        //  cmd.Parameters.AddWithValue("@luong", sp.LuotBinhChon);
+        //  cmd.Parameters.AddWithValue("@maloaisp", sp.MaLoaiSP);
+        //  cmd.Parameters.AddWithValue("@daxoa", sp.DaXoa);
+        //  cmd.Parameters.AddWithValue("@mask", sp.MaSukien);
+        //  cmd.ExecuteNonQuery();
+        //}
+
         //public List<SanPham> ListAll(string sql)
         //{
         //  cmd = new SqlCommand();
@@ -70,44 +187,6 @@ namespace WebApplication1.DAL
         //  connect.Close();
         //  return listsp;
         //}
-        public void Insert(string sql)
-        {
-            cmd = new SqlCommand();
-            cmd.Connection = connect;
-            cmd.CommandText = sql;
-            cmd.ExecuteNonQuery();
-        }
-        public void Delete(string sql)
-        {
-            cmd = new SqlCommand();
-            cmd.Connection = connect;
-            cmd.CommandText = sql;
-            cmd.ExecuteNonQuery();
-        }
-        public void Update(string sql)
-        {
-            cmd = new SqlCommand();
-            cmd.Connection = connect;
-            cmd.CommandText = sql;
-            cmd.ExecuteNonQuery();
-        }
-        //public void Insert(SanPham sp)
-        //{
-        //  cmd = new SqlCommand();
-        //  cmd.Connection = connect;
-        //  cmd.CommandText = "Insert into sanpham values (@tensp,'5/6/2017',@dongia,@mota,@hinhanh,@Soluongton,@Luotxem,@luong,@maloaisp,@daxoa,'5/6/2017',@mask)";
-        //  cmd.Parameters.AddWithValue("@tensp", sp.TenSP ?? "");
-        //  // cmd.Parameters.AddWithValue("@ngaycapnhat", sp.NgayCapNhat);
-        //  cmd.Parameters.AddWithValue("@dongia", sp.DonGia);
-        //  cmd.Parameters.AddWithValue("@mota", sp.Mota ?? "");
-        //  cmd.Parameters.AddWithValue("@hinhanh", sp.Hinhanh);
-        //  cmd.Parameters.AddWithValue("@Soluongton", sp.SoLuongton);
-        //  cmd.Parameters.AddWithValue("@Luotxem", sp.LuotXem);
-        //  cmd.Parameters.AddWithValue("@luong", sp.LuotBinhChon);
-        //  cmd.Parameters.AddWithValue("@maloaisp", sp.MaLoaiSP);
-        //  cmd.Parameters.AddWithValue("@daxoa", sp.DaXoa);
-        //  cmd.Parameters.AddWithValue("@mask", sp.MaSukien);
-        //  cmd.ExecuteNonQuery();
-        //}
+#endregion
     }
 }
