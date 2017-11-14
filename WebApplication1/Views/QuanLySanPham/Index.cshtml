@@ -19,9 +19,10 @@
     columns: grid.Columns(
     grid.Column("MaSP", "Mã sản phẩm"),
     grid.Column("TenSP", "Tên SP"),
-    grid.Column("HinhAnh", "Hình ảnh", format: p => @Html.Raw("<img width=\"150\" height=\"50\" src=\"../Content/HinhAnhSP/" + p.HinhAnh + "\">")),
+    grid.Column("HinhAnh", "Hình ảnh", format: p => @Html.Raw("<img width=\"200\" height=\"100\" src=\"../Content/HinhAnhSP/" + p.HinhAnh + "\">")),
     grid.Column(format: p => @Html.ActionLink("Chỉnh sửa", "ChinhSua", new { id = p.MaSP })),
-    grid.Column(format: p => @Html.ActionLink("Xóa", "Xoa", new { id = p.MaSP }))
+    grid.Column(format: p => @Html.ActionLink("Xóa tạm thời", "XoaTamThoiSanPham", new { maSP = p.MaSP })),
+    grid.Column(format: p => @Html.ActionLink("Xóa hoàn toàn", "XoaHoanToanSanPham", new { maSP = p.MaSP }))
     ))
 
 
@@ -62,3 +63,15 @@
           display: none;
      }
 </style>
+@section scripts{
+     <script>
+          $(function ()
+          {
+               var value = '@TempData["result"]';
+               if (value != '')
+               {
+                    toastr.error(value);
+               }
+          });
+     </script>
+}
