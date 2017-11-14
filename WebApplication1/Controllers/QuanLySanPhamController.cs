@@ -98,7 +98,6 @@ namespace WebApplication1.Controllers
             else
             {
               //Kiểm tra hình ảnh tồn tại
-
               //Lấy tên hình ảnh
               var fileName = Path.GetFileName(HinhAnh[0].FileName);
               //Lấy hình ảnh chuyển vào thư mục hình ảnh 
@@ -219,13 +218,50 @@ namespace WebApplication1.Controllers
       }
       ViewBag.MaSuKien = new SelectList(lstLSK, "MaSuKien", "TenSuKien", model.MaSuKien);
       ViewBag.MaLoaiSP = new SelectList(lstLSP, "MaLoaiSP", "TenLoai", model.MaLoaiSP);
+      int loi = 0;
+      if (HinhAnh[0] != null)
+      {
+        //Kiểm tra nội dung hình ảnh
+        if (HinhAnh[0].ContentLength > 0)
+        {
+          //Kiểm tra định dạng hình ảnh
+          if (HinhAnh[0].ContentType != "image/jpeg" && HinhAnh[0].ContentType != "image/png" && HinhAnh[0].ContentType != "image/gif" && HinhAnh[0].ContentType != "image/jpg")
+          {
+            ViewBag.upload += "Hình ảnh" + " không hợp lệ <br />";
+            loi++;
+          }
+          else
+          {
+            //Kiểm tra hình ảnh tồn tại
+            //Lấy tên hình ảnh
+            var fileName = Path.GetFileName(HinhAnh[0].FileName);
+            //Lấy hình ảnh chuyển vào thư mục hình ảnh 
+            var path = Path.Combine(Server.MapPath("~/Content/HinhAnhSP"), fileName);
+            //Nếu thư mục chứa hình ảnh đó rồi thì xuất ra thông báo
+            if (System.IO.File.Exists(path))
+            {
+              ViewBag.upload1 = "Hình " + "đã tồn tại <br />";
+              loi++;
+            }
+            else
+            {
+              HinhAnh[0].SaveAs(path);
+              model.HinhAnh = fileName;
+            }
+          }
+        }
+      }
+      if (loi > 0)
+      {
+        return View(model);
+      }
       cf.ExecuteNonQuery(string.Format("exec stored_SuaSanPham @MaSP={0},@TenSP = N'{1}', " +
              "@NgayCapNhat = '{2}', @DonGia = {3}, @MoTa = {4}, @HinhAnh = '{5}', " +
              "@SoLuongTon = {6}, @LuotXem = {7}, @LuotBinhChon = {8}, @MaLoaiSP = {9}, " +
              "@NgayDang = '{10}', @MaSuKien = {11} ", model.MaSP, model.TenSP, model.NgayCapNhat, model.DonGia,
-             model.MoTa, model.HinhAnh,model.SoLuongTon, model.LuotXem, model.LuotBinhChon, model.MaLoaiSP, 
+             model.MoTa, model.HinhAnh, model.SoLuongTon, model.LuotXem, model.LuotBinhChon, model.MaLoaiSP,
              model.NgayDang, model.MaSuKien));
-      return View();
+      return RedirectToAction("Index");
     }
   }
 }

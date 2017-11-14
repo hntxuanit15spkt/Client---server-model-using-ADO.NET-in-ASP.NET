@@ -47,7 +47,13 @@
     @Html.ValidationSummary(true)
 
     <span style="color:red;">@Html.Raw(ViewBag.upload as string) <br /> @Html.Raw(ViewBag.upload1 as string) </span>
-
+    <div class="form-group">
+      @Html.LabelFor(model => model.MaSP, new { @class = "control-label col-md-2" })
+      <div class="col-md-10">
+        @Html.EditorFor(model => model.MaSP, new { htmlAttributes = new { @readonly = "readonly" } })
+        @Html.ValidationMessageFor(model => model.TenSP)
+      </div>
+    </div>
     <div class="form-group">
       @Html.LabelFor(model => model.TenSP, new { @class = "control-label col-md-2" })
       <div class="col-md-10">
@@ -58,18 +64,10 @@
     <div class="form-group">
       @Html.LabelFor(model => model.NgayCapNhat, new { @class = "control-label col-md-2" })
       <div class="col-md-10">
-        @Html.TextBox("NgayCapNhat", Model.NgayCapNhat.ToString("dd/MM/yyyy"), new { id = "datepicker_NgayCapNhat", @class = "NgayCapNhat" })
-        @Html.ValidationMessageFor(model => model.NgayCapNhat)
-      </div>
-    </div>
-
-    @*<div class="form-group">
-        @Html.LabelFor(model => model.NgayCapNhat, new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
           @Html.TextBox("NgayCapNhat", "", new { id = "datepicker_NgayCapNhat", @class = "NgayCapNhat" })
           @Html.ValidationMessageFor(model => model.NgayCapNhat)
-        </div>
-      </div>*@
+      </div>
+    </div>
     <div class="form-group">
       @Html.LabelFor(model => model.DonGia, new { @class = "control-label col-md-2" })
       <div class="col-md-10">
@@ -83,7 +81,7 @@
       @Html.LabelFor(model => model.HinhAnh, new { @class = "control-label col-md-2" })
       <div class="col-md-10">
         <input id="HinhAnh" name="HinhAnh" type="file" />
-        <span style="color:red;">@ViewBag.upload </span>
+        @*<span style="color:red;">@ViewBag.upload </span>*@
         <br />
         <img src="@Url.Content("~/Content/HinhAnhSP/"+Model.HinhAnh)" width="250" height="100" />
       </div>
