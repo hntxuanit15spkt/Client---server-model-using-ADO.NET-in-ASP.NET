@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace WebSiteBanHang.Models
+namespace WebApplication1.Models
 {
     public class ItemGioHang
     {

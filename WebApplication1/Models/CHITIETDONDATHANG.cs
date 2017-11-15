@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebSiteBanHang.Models
+namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;

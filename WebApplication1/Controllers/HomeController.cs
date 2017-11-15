@@ -20,6 +20,7 @@ namespace WebApplication1.Controllers
         public ActionResult Show(string ip, string Databasename, string usr, string pwd)
         {
             Connect.ConnectString = " Data Source=" + ip + ";Initial Catalog=" + Databasename + ";Integrated Security=False;User ID=" + usr + ";Password=" + pwd;
+
             // Config cf = new Config(Connect.ConnectString);
             //var list = new List<SanPham>();
             //var check = cf.Connection();
@@ -31,7 +32,7 @@ namespace WebApplication1.Controllers
             else
             {
                 TempData["result"] = "Kết nối cơ sở dữ liệu không thành công!";
-                return RedirectToAction("Index", "test");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -50,6 +51,9 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+
+
+
         public ActionResult MenuPartial()
         {
             //var lstSP = db.SanPhams;

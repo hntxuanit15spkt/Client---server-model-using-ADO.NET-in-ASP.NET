@@ -9,7 +9,7 @@ using WebApplication1.DAL;
 using WebApplication1.Models;
 using WebApplication1.Helper;
 using System.Data;
-using PagedList;
+
 
 namespace WebApplication1.Controllers
 {
@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
         public ActionResult DanhSachSanPhamTheoLoai(int MaLoaiSP/*, int? page*/)
         {
             Config cf = new Config(Connect.ConnectString);
-            DataTable dt = cf.ExecuteQuery("select * from func_DanhSachSanPhamTheoLoai(" + MaLoaiSP + ")");
+            DataTable dt = cf.ExecuteQuery(string.Format("Sp_DienThoai " + MaLoaiSP));
             List<SANPHAM> listSP = new List<SANPHAM>();
             SANPHAM sp =null;
             foreach (DataRow dr in dt.Rows)

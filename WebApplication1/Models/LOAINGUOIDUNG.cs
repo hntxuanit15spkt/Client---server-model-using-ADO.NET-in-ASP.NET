@@ -6,12 +6,17 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+using System;
+using System.Collections.Generic;
+using System.Data;
+using WebApplication1.Models;
+using System.Linq;
+using System.Web;
 
-namespace WebSiteBanHang.Models
+
+namespace WebApplication1.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
+    
 
     public class LOAINGUOIDUNG
     {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebSiteBanHang.Models
+namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
@@ -24,6 +24,7 @@ namespace WebSiteBanHang.Models
         public int MaKH { get; set; }
         public int MaGioHang { get; set; }
         public decimal PhiVanChuyen { get; set; }
+
         public virtual ICollection<CHITIETDONDATHANG> CHITIETDONDATHANGs { get; set; }
         public virtual GIOHANG GIOHANG { get; set; }
     }
