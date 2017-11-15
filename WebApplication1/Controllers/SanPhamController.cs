@@ -13,33 +13,33 @@ using System.Data;
 
 namespace WebApplication1.Controllers
 {
-    public class SanPhamController : Controller
-    {
-        // GET: Test
+  public class SanPhamController : Controller
+  {
+    // GET: Test
 
-        public SanPhamController()
-        {
-        }
-        public ActionResult Index()
-        {
-            return View();
-        }
-        //public List<SanPham> ListAll(string sql)
-        //{
-        //    var lstSP = 
-        //    List < SanPham > = new ListAll()
-        //    List<SanPham> listsp = new List<SanPham>();
-        //    return listsp;
-        //}
-        public ActionResult Delete(int id)
-        {
-            var list = new List<SANPHAM>();
-            Config cf = new Config(Connect.ConnectString);
-            //var check = cf.Connection();
-            if (Connect.CheckConnection())
-            {
-                TempData["results"] = "Xóa thành công!";
-                cf.Delete("Delete SanPham where id = " + id);
+    public SanPhamController()
+    {
+    }
+    public ActionResult Index()
+    {
+      return View();
+    }
+    //public List<SanPham> ListAll(string sql)
+    //{
+    //    var lstSP = 
+    //    List < SanPham > = new ListAll()
+    //    List<SanPham> listsp = new List<SanPham>();
+    //    return listsp;
+    //}
+    public ActionResult Delete(int id)
+    {
+      var list = new List<SANPHAM>();
+      Config cf = new Config(Connect.ConnectString);
+      //var check = cf.Connection();
+      if (Connect.CheckConnection())
+      {
+        TempData["results"] = "Xóa thành công!";
+        cf.Delete("Delete SanPham where id = " + id);
 
             }
             else
@@ -98,7 +98,7 @@ namespace WebApplication1.Controllers
         public ActionResult DanhSachSanPhamTheoLoai(int MaLoaiSP/*, int? page*/)
         {
             Config cf = new Config(Connect.ConnectString);
-            DataTable dt = cf.ExecuteQuery(string.Format("Sp_DienThoai " + MaLoaiSP));
+            DataTable dt = cf.ExecuteQuery("select * from func_DanhSachSanPhamTheoLoai(" + MaLoaiSP + ")");
             List<SANPHAM> listSP = new List<SANPHAM>();
             SANPHAM sp =null;
             foreach (DataRow dr in dt.Rows)
