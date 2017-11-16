@@ -1,0 +1,43 @@
+﻿@using WebApplication1.Models
+@model IEnumerable<NGUOIDUNG>
+
+@{
+    ViewBag.Title = "DanhSachNguoiDungTheoLoai";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 25);
+}
+
+
+<div class="col-md-12 product1">
+    <div class=" bottom-product">
+        @foreach (var item in Model)
+        {
+            @*Thể hiện dữ liệu thông qua control webGrid*@
+            @grid.GetHtml(
+             tableStyle: "divTable",
+             headerStyle: "gridHead",
+             footerStyle: "gridFooter",
+             rowStyle: "gridRow",
+             alternatingRowStyle: "gridAltRow",
+             columns: grid.Columns(
+             grid.Column("MaNguoiDung", "Mã Người Dùng"),
+             grid.Column("Ho", "Họ"),
+             grid.Column("TenLot", "Tên Lót"),
+             grid.Column("Ten", "Tên"),
+             grid.Column("TrangThai", "Đã Xóa"),             
+
+             grid.Column(format: p => @Html.ActionLink("Chỉnh sửa", "Update", new { id = p.MaNguoiDung }))
+             ))
+       }
+        <div class="clearfix"> </div>
+    </div>
+
+</div>
+
+@*<div class="dlink">
+        Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)/@Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("SanPham", new { page = page, @MaLoaiSP = ViewBag.MaLoaiSP, @MaNSX = ViewBag.MaNSX }))
+    </div>*@
+
+
+

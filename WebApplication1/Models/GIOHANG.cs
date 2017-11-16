@@ -16,6 +16,6 @@ namespace WebApplication1.Models
         public bool DaDat { get; set; }
         public virtual ICollection<CHITIETGIOHANG> CHITIETGIOHANGs { get; set; }
         public virtual ICollection<DONDATHANG> DONDATHANGs { get; set; }
-        public virtual NGUOIDUNG NGUOIDUNG { get; set; }
+        public virtual LOAINGUOIDUNG NGUOIDUNG { get; set; }
     }
 }

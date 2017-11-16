@@ -1,0 +1,18 @@
+﻿@model IEnumerable<WebApplication1.Models.LOAINGUOIDUNG>
+
+<div class=" h_menu4">
+    <ul class="memenu skyblue">
+        <li class="showhide" style="display: none;"><span class="title">MENU</span><span class="icon1"></span><span class="icon2"></span></li>
+        <li class="active grid" style="display: inline;"><a class="color8" href="Url.Action(" Index","QuanLyNguoiDung")">Quản lý người dùng</a></li>
+               
+        
+        @foreach (var item in Model)
+        {
+            <li style="display: inline;">
+                <a class="color1" href="@Url.Action("DanhSachNguoiDungTheoLoai", "QuanLyNguoiDung", new { MaLoaiNguoiDung = item.MaLoaiNguoiDung})">@item.TenLoaiNguoiDung</a>
+                
+
+            </li>
+        }
+    </ul>
+</div>
