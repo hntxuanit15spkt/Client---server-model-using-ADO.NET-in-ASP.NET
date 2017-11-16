@@ -1,5 +1,5 @@
 ﻿@using WebApplication1.Models
-@model IEnumerable<NGUOIDUNG>
+@model IEnumerable<DONDATHANG>
 
 @{
     ViewBag.Title = "Index";
@@ -8,9 +8,16 @@
     WebGrid grid = new WebGrid(source: Model, rowsPerPage: 25); //25 = số dòng hiển thị
 }
 
-@Html.ActionLink("Thêm người dùng", "ThemNguoiDung", null, new { @class = "btn btn-success" })
 <br /><br />
 @*Thể hiện dữ liệu thông qua control webGrid*@
+
+<div>
+    <form>
+
+    </form>
+</div>
+
+<br />
 
 @grid.GetHtml(
              tableStyle: "divTable",
@@ -19,16 +26,18 @@
              rowStyle: "gridRow",
              alternatingRowStyle: "gridAltRow",
              columns: grid.Columns(
-             grid.Column("MaNguoiDung", "Mã Người Dùng"),
-             grid.Column("Ho", "Họ"),
-             grid.Column("TenLot", "Tên Lót"),
-             grid.Column("Ten", "Tên"),
-             grid.Column("TrangThai", "Trạng thái"),
+             grid.Column("MaDDH", "Mã ĐơnHàng"),
+             grid.Column("MaKH", "Mã Khách Hàng"),
+             grid.Column("ThoiDiemDat", "Thời điểm đặt"),
+             grid.Column("NgayGiaoDuKien", "Ngày giao dự kiến"),
+             grid.Column("MaNV", "Mã Nhân Viên"),
+             grid.Column("TongTien", "Tổng Tiền"),
+             grid.Column("TinhTrangGiaoHang", "Tình Trạng"),
 
-             grid.Column(format: p => @Html.ActionLink("Chỉnh sửa", "CapNhatThongTinNguoiDung", new { id = p.MaNguoiDung }))
+             grid.Column(format: p => @Html.ActionLink("Xem thêm", "XemThem", new { id = p.MaDDH }))
              ))
 
-
+    
 @*Css cho từng Style của table*@
 <style>
     .divTable {

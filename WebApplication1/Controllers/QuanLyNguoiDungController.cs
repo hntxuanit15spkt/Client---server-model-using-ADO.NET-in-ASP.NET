@@ -14,10 +14,9 @@ namespace WebApplication1.Controllers
 {
     public class QuanLyNguoiDungController : Controller
     {
-        // GET: NguoiDung
+        Config cf = new Config(Connect.ConnectString);
         public ActionResult Index()
         {
-            Config cf = new Config(Connect.ConnectString);
             DataTable dt1 = cf.ExecuteQuery("select * from NGUOIDUNG");
             List<NGUOIDUNG> listND = new List<NGUOIDUNG>();
             NGUOIDUNG nd = null;
@@ -29,35 +28,57 @@ namespace WebApplication1.Controllers
             return View(listND.OrderByDescending(n => n.MaNguoiDung));
         }
         [HttpGet]
-        public ActionResult Insert()
+        public ActionResult ThemNguoiDung()
         {
-            return View();
-        }
-        [HttpPost]
-        public ActionResult Insert(string Ho, string TenLot, string Ten, bool GioiTinh, string DiaChi,
-            string SoDienThoai, string Email, int MaLoaiNguoiDung, string TaiKhoan, string MatKhau, bool TrangThai)
-        {
-            Config cf = new Config(Connect.ConnectString);
-            var list = new List<NGUOIDUNG>();
-            var check = cf.Connection();
-            if (check)
+            if (cf.Connection())
             {
-                TempData["results"] = "Thêm thành công!";
-                cf.Insert("INSERT INTO NguoiDung VALUES(" + Ho + ", "
-                  + TenLot + "," + Ten + "," + GioiTinh + "," + DiaChi + "," + SoDienThoai + "," + Email
-                  + "," + MaLoaiNguoiDung + "," + TaiKhoan + "," + MatKhau + "," + TrangThai + ");");
+                //Load dropdownlist Mã Loại người dùng
+                DataTable dtLoaiND = cf.ExecuteQuery("select * from LOAINGUOIDUNG");
+                List<LOAINGUOIDUNG> lstLND = new List<LOAINGUOIDUNG>();
+                LOAINGUOIDUNG lnd = null;
+                foreach (DataRow item in dtLoaiND.Rows)
+                {
+                    lnd = new LOAINGUOIDUNG(item);
+                    lstLND.Add(lnd);
+                }              
+
+                ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n=>n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+                return View();
             }
             else
             {
                 TempData["result"] = "Kết nối cơ sở dữ liệu không thành công!";
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "QuanLyNguoiDung");
             }
+        }
+
+        [ValidateInput(false)]
+        [HttpPost]
+        public ActionResult ThemNguoiDung(NGUOIDUNG nd)
+        {
+            //Load dropdownlist Mã Loại người dùng
+            DataTable dtLoaiND = cf.ExecuteQuery("select * from LOAINGUOIDUNG");
+            List<LOAINGUOIDUNG> lstLND = new List<LOAINGUOIDUNG>();
+            LOAINGUOIDUNG lnd = null;
+            foreach (DataRow item in dtLoaiND.Rows)
+            {
+                lnd = new LOAINGUOIDUNG(item);
+                lstLND.Add(lnd);
+            }
+
+            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n => n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+
+            cf.ExecuteNonQuery(string.Format("exec stored_ThemNguoiDung @Ho = N'{0}', " +
+                      "@TenLot = N'{1}', @Ten = N'{2}', @GioiTinh = {3}, @DiaChi = {4}, " +
+                      "@SoDienThoai = {5}, @Email = {6}, @MaLoaiNguoiDung = {7}, @TaiKhoan = {8}, @MatKhau = {9}, " +
+                      "@TrangThai = 0", nd.Ho,nd.TenLot, nd.Ten, nd.GioiTinh, nd.DiaChi, nd.SoDienThoai,
+                      nd.Email, nd.MaLoaiNguoiDung,nd.TaiKhoan, nd.MatKhau));
+
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public ActionResult Update(int? id)
+        public ActionResult CapNhatThongTinNguoiDung(int? id)
         {
-            Config cf = new Config(Connect.ConnectString);
             DataTable dt1 = cf.ExecuteQuery(string.Format("select * from NGUOIDUNG where MaNguoiDung={0}", id));
             List<NGUOIDUNG> listND = new List<NGUOIDUNG>();
             NGUOIDUNG nd = null;
@@ -66,7 +87,6 @@ namespace WebApplication1.Controllers
                 nd = new NGUOIDUNG(dr);
                 listND.Add(nd);
             }
-            //Lấy nhân viên cần chỉnh sửa dựa vào id
             if (id == null)
             {
                 Response.StatusCode = 404;
@@ -76,22 +96,36 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            return View();
+            DataTable dtLoaiND = cf.ExecuteQuery("select * from LOAINGUOIDUNG");
+            List<LOAINGUOIDUNG> lstLND = new List<LOAINGUOIDUNG>();
+            LOAINGUOIDUNG lnd = null;
+            foreach (DataRow item in dtLoaiND.Rows)
+            {
+                lnd = new LOAINGUOIDUNG(item);
+                lstLND.Add(lnd);
+            }
+
+            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n => n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+            return View(nd);
         }
         [ValidateInput(false)]
         [HttpPost]
 
         //string Ho, string TenLot, string Ten, bool GioiTinh, string DiaChi,
         //string SoDienThoai, int MaNguoiDung, string Email, int MaLoaiNguoiDung, string TaiKhoan, string MatKhau, bool TrangThai
-        public ActionResult Update(NGUOIDUNG model)
+        public ActionResult CapNhatThongTinNguoiDung(NGUOIDUNG model)
         {
-            Config cf = new Config(Connect.ConnectString);
-            var list = new List<NGUOIDUNG>();
-            var check = cf.Connection();
-            if (check)
+            DataTable dtLoaiND = cf.ExecuteQuery("select * from LOAINGUOIDUNG");
+            List<LOAINGUOIDUNG> lstLND = new List<LOAINGUOIDUNG>();
+            LOAINGUOIDUNG lnd = null;
+            foreach (DataRow item in dtLoaiND.Rows)
             {
-                TempData["results"] = "Cập nhật thành công!";
-                cf.ExecuteNonQuery("EXEC dbo.CapNhatThongTinNV"  
+                lnd = new LOAINGUOIDUNG(item);
+                lstLND.Add(lnd);
+            }
+
+            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n => n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+            cf.ExecuteNonQuery("EXEC dbo.store_CapNhatThongTinNguoiDung"  
                                 + " @Ho = N'" + model.Ho + "',"
                                 + " @TenLot = N'" +model.TenLot + "',"
                                 + " @Ten = N'" + model.Ten + " ',"
@@ -104,18 +138,12 @@ namespace WebApplication1.Controllers
                                 + " @TaiKhoan = '" +model.TaiKhoan+ "',"
                                 + " @MatKhau = '" + model.MatKhau +"',"
                                 + " @TrangThai = "+model.TrangThai);
-            }
-            else
-            {
-                TempData["result"] = "Kết nối cơ sở dữ liệu không thành công!";
-                return RedirectToAction("Index");
-            }
+         
             return RedirectToAction("Index");            
         }
 
         public ActionResult DanhSachNguoiDungTheoLoai(int MaLoaiNguoiDung/*, int? page*/)
         {
-            Config cf = new Config(Connect.ConnectString);
             DataTable dt = cf.ExecuteQuery("SELECT * FROM dbo.func_DanhSachNguoiDungTheoLoai("+MaLoaiNguoiDung+")");
             List<NGUOIDUNG> listND = new List<NGUOIDUNG>();
             NGUOIDUNG nd = null;
@@ -129,19 +157,6 @@ namespace WebApplication1.Controllers
             ViewBag.MaLoaiNguoiDung = MaLoaiNguoiDung;
             //return View(listND.ToPagedList(PageNumber, PageSize));
             return View(listND);
-        }
-        public ActionResult MenuPartial()
-        {
-            Config cf = new Config(Connect.ConnectString);
-            List<LOAINGUOIDUNG> listLND = new List<LOAINGUOIDUNG>();
-            LOAINGUOIDUNG lnd = null;
-            DataTable dtND = cf.ExecuteQuery("select * from LOAINGUOIDUNG");
-            foreach (DataRow item in dtND.Rows)
-            {
-                lnd = new LOAINGUOIDUNG(item);
-                listLND.Add(lnd);
-            }
-            return PartialView(listLND);
-        }
+        }        
     }
 }

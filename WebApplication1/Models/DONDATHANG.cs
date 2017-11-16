@@ -6,13 +6,44 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Linq;
+using System.Web;
 namespace WebApplication1.Models
 {
     using System;
     using System.Collections.Generic;
     public class DONDATHANG
     {
+        public DONDATHANG(DataRow red)
+        {            
+            this.MaDDH = Convert.ToInt32(red["MaDDH"]);
+            if (!Convert.IsDBNull(red["ThoiDiemDat"]))
+                this.ThoiDiemDat =Convert.ToDateTime(red["ThoiDiemDat"]);
+            if (!Convert.IsDBNull(red["TinhTrangGiaoHang"]))
+                this.TinhTrangGiaoHang = Convert.ToInt32(red["TinhTrangGiaoHang"]);
+            if (!Convert.IsDBNull(red["ThoiDiemLap"]))
+                this.ThoiDiemLap = Convert.ToDateTime(red["ThoiDiemLap"]);
+            if (!Convert.IsDBNull(red["NgayGiaoDuKien"]))
+                this.NgayGiaoDuKien = Convert.ToDateTime(red["NgayGiaoDuKien"]);
+            if (!Convert.IsDBNull(red["UuDai"]))
+                this.UuDai =Convert.ToInt32(red["UuDai"].ToString());
+            if (!Convert.IsDBNull(red["TongTien"]))
+                this.TongTien =Convert.ToDecimal(red["TongTien"]);
+            if (!Convert.IsDBNull(red["MaNV"]))
+                this.MaNV = Convert.ToInt32(red["MaNV"].ToString());
+            if (!Convert.IsDBNull(red["MaKH"]))
+                this.MaKH = Convert.ToInt32(red["MaKH"].ToString());
+            if (!Convert.IsDBNull(red["MaGioHang"]))
+                this.MaGioHang = Convert.ToInt32(red["MaGioHang"].ToString());
+            if (!Convert.IsDBNull(red["PhiVanChuyen"]))
+                this.PhiVanChuyen = Convert.ToDecimal(red["PhiVanChuyen"]);
+        }
+
+
         public int MaDDH { get; set; }
         public DateTime ThoiDiemDat { get; set; }
         public int TinhTrangGiaoHang { get; set; }
@@ -27,5 +58,15 @@ namespace WebApplication1.Models
 
         public virtual ICollection<CHITIETDONDATHANG> CHITIETDONDATHANGs { get; set; }
         public virtual GIOHANG GIOHANG { get; set; }
+
+
+
+        public DONDATHANG()
+        {
+            this.CHITIETDONDATHANGs = new HashSet<CHITIETDONDATHANG>();
+        }
     }
+
+
+
 }

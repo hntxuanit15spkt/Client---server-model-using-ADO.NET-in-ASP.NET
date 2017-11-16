@@ -1,0 +1,104 @@
+﻿@model WebApplication1.Models.DONDATHANG
+@{
+    ViewBag.Title = "CapNhatThongTinNguoiDung";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+
+<h2>Thông tin đơn hàng</h2>
+
+
+@using (Html.BeginForm("XemThem", "QuanLyDonHang", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+        <span style="color:red;">@Html.Raw(ViewBag.upload as string) <br /> @Html.Raw(ViewBag.upload1 as string) </span>
+
+
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.MaDDH, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaDDH, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.MaDDH)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.ThoiDiemDat, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ThoiDiemDat, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.ThoiDiemDat)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.TinhTrangGiaoHang, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TinhTrangGiaoHang, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.TinhTrangGiaoHang)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.ThoiDiemLap, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ThoiDiemLap, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.ThoiDiemLap)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.NgayGiaoDuKien, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NgayGiaoDuKien, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.NgayGiaoDuKien)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.UuDai, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UuDai, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.UuDai)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.TongTien, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TongTien, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.TongTien)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.MaNV, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaNV, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.MaNV)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.MaKH, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaKH, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.MaKH)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.MaGioHang, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MaGioHang, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.MaGioHang)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(Model => Model.PhiVanChuyen, new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PhiVanChuyen, new { htmlAttributes = new { @readonly = "readonly" } })
+                @Html.ValidationMessageFor(model => model.PhiVanChuyen)
+            </div>
+        </div>
+
+        @Html.ActionLink("Duyệt đơn hàng", "DuyetDonHang", null, new { @class = "btn btn-success" })
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
