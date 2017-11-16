@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Data;
 using System.Linq;
 using System.Web;
+using WebApplication1.Models;
 
 namespace WebApplication1.Models
 {
-    public class ItemGioHang
+  public class ItemGioHang
     {
         public int MaSP { get; set; }
         public string TenSP { get; set; }

@@ -1,4 +1,5 @@
-﻿@using WebApplication1.Models
+﻿@model WebApplication1.Models.NGUOIDUNG
+
 
 <div class="header-top">
   <div class="container">
@@ -12,21 +13,19 @@
     </div>
     <div class="header-left">
       <ul>
-        @*if (Session["NGUOIDUNG"] != null && Session["TaiKhoan"] != "")
-          {
-               @*NGUOIDUNG tv = (NGUOIDUNG)Session["NGUOIDUNG"];
-               <li>Chào @tv.Ten </li>
-               @Html.ActionLink("Đăng xuất", "DangXuat", "Home")
-          }
-          else
-          {*@
-        <li style=" display: inline;"><a id="btnDangNhap" class="lock" href="#">Đăng nhập</a></li>
-        <li style=" display: inline;"><a class="lock" href="@Url.Action("DangKy","Home")">Đăng ký</a></li>
-        @*}*@
+        @if (Model != null )
+        {
+          //NGUOIDUNG tv = (NGUOIDUNG)Session["NGUOIDUNG"];
+          <li style="color: white;">Chào @Model.Ten </li>
+          @Html.ActionLink("Đăng xuất", "DangXuat", "Home")
+        }
+        else
+        {
+          <li style=" display: inline;"><a id="btnDangNhap" class="lock" href="#">Đăng nhập</a></li>
+          <li style=" display: inline;"><a class="lock" href="@Url.Action("DangKy","Home")">Đăng ký</a></li>
+        }
         <li>
-
         </li>
-
       </ul>
       @*Chèn partial view giỏ hàng vào layout( Tách icon giỏ hàng sang 1 partial view mới)*@
       @*@Html.Action("GioHangPartial", "GioHang")*@
@@ -54,11 +53,11 @@
         <input class="password MatKhau" name="txtMatKhau" placeholder="Mật khẩu" required="" type="password">
         <p><a href="#">Quên mật khẩu?</a></p>
         <h3 style="font-weight:bold;color:red;text-align:left;" id="ThongBao"> </h3>
-                    <ul class="login-buttons">
-                      <li><input value="Đăng nhập" type="submit" id="btnDangNhap1"></li>
-                      <li><a href="#" class="hvr-sweep-to-left">Đăng ký</a></li>
+        <ul class="login-buttons">
+          <li><input value="Đăng nhập" type="submit" id="btnDangNhap1"></li>
+          <li><a href="#" class="hvr-sweep-to-left">Đăng ký</a></li>
 
-                    </ul>
+        </ul>
 
       }
 
@@ -116,5 +115,4 @@
       return;
     }
   });
-
 </script>
