@@ -8,23 +8,23 @@
     {
       <li style="display: inline;">
         <a class="color1" href="@Url.Action("DanhSachSanPhamTheoLoai", "SanPham", new { MaLoaiSP = item.MaLoaiSP})">@item.TenLoai</a>
-        <div class="mepanel" style="display: none; opacity: 1;">
+        @*<div class="mepanel" style="display: none; opacity: 1;">
           <div class="row">
             <div class="col1">
               <div class="h_nav">
                 <ul>
-                  @*@foreach (var item in groupItem.GroupBy(n => n.NhaSanXuat))
+                  @foreach (var item in groupItem.GroupBy(n => n.NhaSanXuat))
                     {
                         if (item.Key != null)
                         {
                             <li><a href="@Url.Action("SanPham", "SanPham", new { MaLoaiSP = groupItem.Key.MaLoaiSP, MaNSX = item.Key.MaNSX })">@item.Key.TenNSX</a></li>
                         }
-                    }*@
+                    }
                 </ul>
               </div>
             </div>
           </div>
-        </div>
+        </div>*@
       </li>
     }
   </ul>

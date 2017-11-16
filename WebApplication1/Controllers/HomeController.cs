@@ -19,18 +19,21 @@ namespace WebApplication1.Controllers
     }
     public ActionResult Show(string ip, string Databasename, string usr, string pwd)
     {
-      Config cf = new Config(Connect.ConnectString);
       Connect.ipaddress = ip;
       Connect.databasename = Databasename;
       Connect.username = usr;
       Connect.password = pwd;
       Connect.ConnectString = " Data Source=" + ip + ";Initial Catalog=" + Databasename + ";Integrated Security=False;User ID=" + usr + ";Password=" + pwd;
-      //DataTable dtNguoiDung = cf.ExecuteQuery("select * from NGUOIDUNG where TaiKhoan =" + Connect.username + "and MatKhau=" + Connect.password);
-      //NGUOIDUNG nguoiDung = new NGUOIDUNG(dtNguoiDung.Rows[0]);
+      Config cf = new Config(Connect.ConnectString);
       if (Connect.CheckConnection())
       {
+        DataTable dtNguoiDung = cf.ExecuteQuery("select * from NGUOIDUNG where TaiKhoan ='" + Connect.username + "'and MatKhau='" + Connect.password + "'");
+        NGUOIDUNG nguoiDung = new NGUOIDUNG(dtNguoiDung.Rows[0]);
         TempData["result"] = "Kết nối thành công!";
-        //list = cf.ListAll("select * from SanPham where DaXoa=0");
+        if (nguoiDung.MaLoaiNguoiDung != 1 && nguoiDung.MaLoaiNguoiDung != 2)
+        {
+          return RedirectToAction("Index", "QuanLySanPham");
+        }
       }
       else
       {
@@ -55,12 +58,12 @@ namespace WebApplication1.Controllers
       return View();
     }
     public ActionResult HeaderTopPartial()
-    { 
-        Config cf = new Config(Connect.ConnectString);
-        //List<NGUOIDUNG> listNguoiDung = new List<NGUOIDUNG>();
-        DataTable dtNguoiDung = cf.ExecuteQuery("select * from NGUOIDUNG where TaiKhoan ='" + Connect.username + "'and MatKhau='" + Connect.password + "'");
-        NGUOIDUNG nguoiDung = new NGUOIDUNG(dtNguoiDung.Rows[0]);
-        return View(nguoiDung);
+    {
+      Config cf = new Config(Connect.ConnectString);
+      //List<NGUOIDUNG> listNguoiDung = new List<NGUOIDUNG>();
+      DataTable dtNguoiDung = cf.ExecuteQuery("select * from NGUOIDUNG where TaiKhoan ='" + Connect.username + "'and MatKhau='" + Connect.password + "'");
+      NGUOIDUNG nguoiDung = new NGUOIDUNG(dtNguoiDung.Rows[0]);
+      return View(nguoiDung);
     }
     public ActionResult MenuPartial()
     {
