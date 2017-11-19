@@ -13,11 +13,31 @@
     </div>
     <div class="header-left">
       <ul>
-        @if (Model != null )
+        @if (Model != null)
         {
-          //NGUOIDUNG tv = (NGUOIDUNG)Session["NGUOIDUNG"];
-          <li style="color: white;">Chào @Model.Ten </li>
-          @Html.ActionLink("Đăng xuất", "DangXuat", "Home")
+          @*<div class="profile_details">*@
+          @*<ul>*@
+          <li class="dropdown profile_details_drop">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <div class="profile_img">
+                <span class="prfil-img"><img src="~/Content/images/p1.png" alt=""> </span>
+                @*<span class="user-name">*@
+                <span>@Model.Ten</span>
+                <span class="caret"></span>
+                @*</span>*@
+                @*<i class="fa fa-angle-down lnr"></i>
+                  <i class="fa fa-angle-up lnr"></i>*@
+                <div class="clearfix"></div>
+              </div>
+            </a>
+            <ul class="dropdown-menu drp-mnu">
+              <li> <a href="#"><i class="fa fa-cog"></i> Liệt kê sản phẩm</a> </li>
+              <li> <a href="@Url.Action("CapNhatThongTinNguoiDung","QuanLyNguoiDung",new { @id=Model.MaNguoiDung })"><i class="fa fa-user"></i> Chỉnh sửa thông tin cá nhân</a> </li>
+              <li> <a href="#"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
+            </ul>
+          </li>
+          @*</ul>*@
+          @*</div>*@
         }
         else
         {
