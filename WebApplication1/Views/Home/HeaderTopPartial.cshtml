@@ -31,7 +31,7 @@
               </div>
             </a>
             <ul class="dropdown-menu drp-mnu">
-              <li> <a href="#"><i class="fa fa-cog"></i> Liệt kê sản phẩm</a> </li>
+              <li> <a href="@Url.Action("DSSanPhamKhachHangDaMua","SanPham",new { @MaKH=Model.MaNguoiDung})"><i class="fa fa-cog"></i> Liệt kê sản phẩm</a> </li>
               <li> <a href="@Url.Action("CapNhatThongTinNguoiDung","QuanLyNguoiDung",new { @id=Model.MaNguoiDung })"><i class="fa fa-user"></i> Chỉnh sửa thông tin cá nhân</a> </li>
               <li> <a href="#"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
             </ul>

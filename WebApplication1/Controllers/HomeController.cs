@@ -67,11 +67,14 @@ namespace WebApplication1.Controllers
     }
     public ActionResult MenuPartial()
     {
-      //var lstSP = db.SanPhams;
       Config cf = new Config(Connect.ConnectString);
+      DataTable dtNguoiDung = cf.ExecuteQuery("select * from NGUOIDUNG where TaiKhoan ='" + Connect.username + "'and MatKhau='" + Connect.password + "'");
+      NGUOIDUNG nguoiDung = new NGUOIDUNG(dtNguoiDung.Rows[0]);
+      //var lstSP = db.SanPhams;
       List<LOAISANPHAM> listLSP = new List<LOAISANPHAM>();
       LOAISANPHAM lsp = null;
       DataTable dtSP = cf.ExecuteQuery("select * from LOAISANPHAM");
+      ViewBag.MaKH = nguoiDung.MaNguoiDung;
       foreach (DataRow item in dtSP.Rows)
       {
         lsp = new LOAISANPHAM(item);
@@ -79,19 +82,6 @@ namespace WebApplication1.Controllers
       }
       return PartialView(listLSP);
     }
-    //public ActionResult MenuPartial()
-    //{
-    //    //var lstSP = db.SanPhams;
-    //    Config cf = new Config(Connect.ConnectString);
-    //    List<SANPHAM> listSP = new List<SANPHAM>();
-    //    DataTable dtSP = cf.ExecuteQuery("select * from SanPham");
-    //    foreach (DataRow item in dtSP.Rows)
-    //    {
-    //        SANPHAM sp = new SANPHAM(item);
-    //        listSP.Add(sp);
-    //    }
-    //    return PartialView(listSP);
-    //}
     public ActionResult Contact()
     {
       ViewBag.Message = "Your contact page.";
