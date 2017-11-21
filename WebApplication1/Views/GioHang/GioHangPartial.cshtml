@@ -1,0 +1,22 @@
+﻿@using WebApplication1.Models
+@model NGUOIDUNG
+
+@*Dùng viewbag để thể hiện tổng số lượng sản phẩm có trong giỏ hàng và tổng tiền*@
+<div id="divGioHang" class="cart box_1">
+  <a href="@Url.Action("Index","GioHang",new { @MaKH=Model.MaNguoiDung})">
+    <h3>
+      <div class="total">
+        @ViewBag.TongTien.ToString("#,##") VNĐ (<span>@ViewBag.TongSoLuong</span> sp)
+      </div>
+      <img src="~/Content/images/cart.png" alt="" />
+    </h3>
+  </a>
+  <p><a href="@Url.Action("Index","GioHang",new { @MaKH=Model.MaNguoiDung})" clas class="simpleCart_empty">Giỏ hàng</a></p>
+  @if (ViewBag.ThongBao != null)
+  {
+    <script>
+      alert("Sản phẩm đã hết hàng!");
+    </script>
+  }
+</div>
+

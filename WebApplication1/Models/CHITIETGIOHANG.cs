@@ -24,6 +24,7 @@ namespace WebApplication1.Models
       this.HinhAnh = sp.HinhAnh;
       this.TenSP = sp.TenSP;
       this.DonGia = sp.DonGia;
+      this.ThanhTien = this.SoLuong * this.DonGia;
     }
     public int MaGioHang { get; set; }
     public int MaSP { get; set; }

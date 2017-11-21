@@ -48,7 +48,7 @@
         </li>
       </ul>
       @*Chèn partial view giỏ hàng vào layout( Tách icon giỏ hàng sang 1 partial view mới)*@
-      @*@Html.Action("GioHangPartial", "GioHang")*@
+      @Html.Action("GioHangPartial", "GioHang", new { @id = Model.MaNguoiDung })
       <div class="clearfix"> </div>
     </div>
     <div class="clearfix"> </div>

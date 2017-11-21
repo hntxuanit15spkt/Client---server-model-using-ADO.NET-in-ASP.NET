@@ -9,44 +9,83 @@
 <div class="cart-header col-md-9">
   @foreach (var item in Model)
   {
-    <div class="close1"> </div>
-    <div class="cart-sec simpleCart_shelfItem">
-      <div class="cart-item cyc">
-        <img src="@Url.Content("~/Content/HinhAnhSP/"+item.HinhAnh)" class="img-responsive" alt="" />
+    using (Html.BeginForm("CapNhatGioHang", "GioHang", new { maGioHang = item.MaGioHang, maSP = item.MaSP, soLuong = item.SoLuong }))
+    {
+      <div class="close"> </div>
+      <div class="cart-sec simpleCart_shelfItem">
+        <div class="cart-item cyc">
+          <img src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" class="img-responsive" alt="" />
+        </div>
+        <div class="cart-item-info">
+          <h3><a href="#">@item.TenSP</a></h3>
+          <ul class="qty col-md-6">
+            <li><p>Đơn giá: @item.DonGia</p></li>
+            <li><p>Số lượng: <input type="text" id="quantity" name="quantity" class="form-control input-number" value=@item.SoLuong disabled /></p></li>
+            @*<li><p>Số lượng: @item.SoLuong</p></li>*@
+            @*<li>
+                <p>
+                  Số lượng:
+                  <div class="col-lg-2">
+                    <div class="input-group">
+                      <span class="input-group-btn">
+                        <button type="button" class="quantity-left-minus btn btn-danger btn-number" data-type="minus" data-field="">
+                          <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <input type="text" id="quantity" name="quantity" class="form-control input-number" value=@item.SoLuong min="1" max="100" />
+                        <button type="button" class="quantity-right-plus btn btn-success btn-number" data-type="plus" data-field="">
+                          <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
+                  @*<span class="btn-up-down up">
+                       <i class="icon icon-cart-item-plus"></i>
+                    </span>
+                </p>
+              </li>*@
+
+          </ul>
+          <div>
+            <input type="button" id="edit_on" class="btn btn-primary col-md-2" value="Sửa"/>
+            <input type="submit" class="btn btn-primary col-md-2" value="Lưu"/>
+            <input type="button" id="edit_on" class="btn btn-primary col-md-2" value="Xóa" />
+          </div>
+          @*<div class="delivery">
+              <p>Service Charges : Rs.100.00</p>
+              <span>Delivered in 2-3 bussiness days</span>
+              <div class="clearfix"></div>
+            </div>*@
+        </div>
+        <div class="clearfix"></div>
       </div>
-      <div class="cart-item-info">
-        <h3><a href="#">@item.TenSP</a></h3>
-        <ul class="qty">
-          <li><p>Đơn giá: @item.DonGia</p></li>
-          <li><p>Số lượng: @item.SoLuong</p></li>
-        </ul>
-        @*<div class="delivery">
-            <p>Service Charges : Rs.100.00</p>
-            <span>Delivered in 2-3 bussiness days</span>
-            <div class="clearfix"></div>
-          </div>*@
-      </div>
-      <div class="clearfix"></div>
-    </div>
+    }
   }
 </div>
 <div class="col-md-3 cart-total">
-  <a class="continue" href="#">Continue to basket</a>
+  <a class="continue" href="#">Tiếp tục mua hàng</a>
   <div class="price-details">
-    <h3>Price Details</h3>
-    <span>Total</span>
-    <span class="total1">6200.00</span>
-    <span>Discount</span>
+    <h3>Thanh toán chi tiết</h3>
+    <span>Tổng tiền</span>
+    <span class="total1">@ViewBag.TongTienDonHang</span>
+    <span>Giảm giá</span>
     <span class="total1">---</span>
-    <span>Delivery Charges</span>
+    <span>Phí vận chuyển</span>
     <span class="total1">150.00</span>
     <div class="clearfix"></div>
   </div>
   <ul class="total_price">
-    <li class="last_price"> <h4>TOTAL</h4></li>
+    <li class="last_price"> <h4>Tổng cộng</h4></li>
     <li class="last_price"><span>6350.00</span></li>
     <div class="clearfix"> </div>
   </ul>
+  <div class="clearfix"></div>
+  <a class="order" href="#">Thanh toán</a>
 </div>
 
 
+<script>
+  $('#edit_on').click(function () {
+    debugger
+    $('#quantity').prop('disabled', false);
+  })
+</script>
