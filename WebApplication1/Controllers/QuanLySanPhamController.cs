@@ -17,15 +17,21 @@ namespace WebApplication1.Controllers
     Config cf = new Config(Connect.ConnectString);
     public ActionResult Index()
     {
-      DataTable dtLstSP = cf.ExecuteQuery("select * from sanpham where daxoa=0");
-      List<SANPHAM> lsp = new List<SANPHAM>();
-      SANPHAM sp = null;
-      foreach (DataRow dr in dtLstSP.Rows)
+      DataTable dtNguoiDung = cf.ExecuteQuery("select * from NGUOIDUNG where TaiKhoan ='" + Connect.username + "'and MatKhau='" + Connect.password + "'");
+      NGUOIDUNG nguoiDung = new NGUOIDUNG(dtNguoiDung.Rows[0]);
+      if (nguoiDung.MaLoaiNguoiDung == 4 || nguoiDung.MaLoaiNguoiDung == 5)
       {
-        sp = new SANPHAM(dr);
-        lsp.Add(sp);
+        DataTable dtLstSP = cf.ExecuteQuery("select * from sanpham where daxoa=0");
+        List<SANPHAM> lsp = new List<SANPHAM>();
+        SANPHAM sp = null;
+        foreach (DataRow dr in dtLstSP.Rows)
+        {
+          sp = new SANPHAM(dr);
+          lsp.Add(sp);
+        }
+        return View(lsp);
       }
-      return View(lsp);
+      return RedirectToAction("ThongBaoKhongDuQuyenTruyCap", "Home");
     }
     [HttpGet]
     public ActionResult TaoMoi()
