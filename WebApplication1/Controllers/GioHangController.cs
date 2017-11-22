@@ -68,6 +68,7 @@ namespace WebApplication1.Controllers
         lstCTGH.Add(ctgh);
       }
       ViewBag.maKH = MaKH;
+      ViewBag.maGioHang = lstGioHang.MaGioHang;
       ViewBag.TongTienDonHang = TinhTongTien();
       return View(lstCTGH);
     }

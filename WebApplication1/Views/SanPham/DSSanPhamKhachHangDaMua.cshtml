@@ -1,0 +1,27 @@
+﻿@using WebApplication1.Models;
+@model List<SANPHAMKHACHHANGDAT>
+
+@{
+  ViewBag.Title = "DSSanPhamKhachHangDaMua";
+  Layout = "~/Views/Layout/ProductLayout.cshtml";
+}
+
+<div class="cart-header col-md-9">
+  @foreach (var item in Model)
+  {
+    <div class="cart-sec simpleCart_shelfItem">
+      <div class="cart-item cyc">
+        <img src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" class="img-responsive" alt="" />
+      </div>
+      <div class="cart-item-info">
+        <h3><a href="#">@item.TenSP</a></h3>
+        <ul class="qty col-md-6">
+          <li><p>Đơn giá: @item.DonGia</p></li>
+          <li><p>Số lượng: @item.SoLuongDaDatCuaKH</p></li>
+          <li><p>Ngày đặt: @item.ThoiDiemDatCuaKH</p></li>
+        </ul>
+      </div>
+      <div class="clearfix"></div>
+    </div>
+  }
+</div>

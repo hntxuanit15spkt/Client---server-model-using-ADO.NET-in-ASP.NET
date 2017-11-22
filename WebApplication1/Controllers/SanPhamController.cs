@@ -120,30 +120,31 @@ namespace WebApplication1.Controllers
       }
     }
     
-    //public ActionResult DSSanPhamKhachHangDaMua(int? MaKH)
-    //{
-    //  Config cf = new Config(Connect.ConnectString);
-    //  if (Connect.CheckConnection())
-    //  {
-    //    DataTable dt = cf.ExecuteQuery("select * from lietkeSP(" + MaKH + ")");
-    //    List<SANPHAM> listSP = new List<SANPHAM>();
-    //    SANPHAM sp = null;
-    //    foreach (DataRow dr in dt.Rows)
-    //    {
-    //      sp = new SANPHAM(dr);
-    //      listSP.Add(sp);
-    //    }
-    //    //int PageSize = 1;//số sản phẩm trên trang
-    //    //int PageNumber = (page ?? 1);//page không có giá trị thì PageNumber sẽ có giá trị là 1, số trang hiện tại
-    //    //ViewBag.MaLoaiSP = MaLoaiSP;
-    //    //return View(listSP.ToPagedList(PageNumber, PageSize));
-    //    return View(listSP);
-    //  }
-    //  else
-    //  {
-    //    TempData["result"] = "Kết nối cơ sở dữ liệu không thành công!";
-    //    return RedirectToAction("Index", "Home");
-    //  }
-    //}
+    public ActionResult DSSanPhamKhachHangDaMua(int? MaKH)
+    {
+      Config cf = new Config(Connect.ConnectString);
+      if (Connect.CheckConnection())
+      {
+        DataTable dt = cf.ExecuteQuery("select * from lietkeSP(" + MaKH + ")");
+        List<SANPHAMKHACHHANGDAT> listSP = new List<SANPHAMKHACHHANGDAT>();
+        SANPHAMKHACHHANGDAT sp = null;
+        foreach(DataRow dr in dt.Rows)
+        {
+          sp = new SANPHAMKHACHHANGDAT(dr);
+          listSP.Add(sp);
+        }
+        //int PageSize = 1;//số sản phẩm trên trang
+        //int PageNumber = (page ?? 1);//page không có giá trị thì PageNumber sẽ có giá trị là 1, số trang hiện tại
+        //ViewBag.MaLoaiSP = MaLoaiSP;
+        //return View(listSP.ToPagedList(PageNumber, PageSize));
+        return View(listSP);
+      }
+      else
+      {
+        TempData["result"] = "Kết nối cơ sở dữ liệu không thành công!";
+        return RedirectToAction("Index", "Home");
+      }
+    }
+    
   }
 }

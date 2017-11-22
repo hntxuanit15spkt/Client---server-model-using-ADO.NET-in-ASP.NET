@@ -7,37 +7,24 @@ using System.Web;
 
 namespace WebApplication1.Models
 {
-  public class SANPHAM
+  public class SANPHAMKHACHHANGDAT
   {
-    public SANPHAM()
+    public SANPHAMKHACHHANGDAT()
     {
 
     }
-    public SANPHAM(DataRow red)
+    public SANPHAMKHACHHANGDAT(DataRow red)
     {
       this.MaSP = Convert.ToInt32(red["MaSP"]);
       if (!Convert.IsDBNull(red["TenSP"]))
         this.TenSP = red["TenSP"].ToString();
-      if (!Convert.IsDBNull(red["NgayCapNhat"]))
-        this.NgayCapNhat = Convert.ToDateTime(red["NgayCapNhat"]);
+      this.HinhAnh = red["HinhAnh"].ToString();
       if (!Convert.IsDBNull(red["DonGia"]))
         this.DonGia = Convert.ToDecimal(red["DonGia"]);
-      this.MoTa = red["MoTa"].ToString();
-      this.HinhAnh = red["HinhAnh"].ToString();
-      if (!Convert.IsDBNull(red["SoLuongTon"]))
-        this.SoLuongTon = Convert.ToInt32(red["SoLuongTon"]);
-      if (!Convert.IsDBNull(red["LuotXem"]))
-        this.LuotXem = Convert.ToInt32(red["LuotXem"]);
-      if (!Convert.IsDBNull(red["LuotBinhChon"]))
-        this.LuotBinhChon = Convert.ToInt32(red["LuotBinhChon"]);
-      if (!Convert.IsDBNull(red["MaLoaiSP"]))
-        this.MaLoaiSP = Convert.ToInt32(red["MaLoaiSP"]);
-      if (!Convert.IsDBNull(red["DaXoa"]))
-        this.DaXoa = Convert.ToBoolean(red["DaXoa"]);
-      if (!Convert.IsDBNull(red["NgayDang"]))
-        this.NgayDang = Convert.ToDateTime(red["NgayDang"]);
-      if (!Convert.IsDBNull(red["MaSuKien"]))
-        this.MaSuKien = Convert.ToInt32(red["MaSuKien"]);
+      if (!Convert.IsDBNull(red["SoLuong"]))
+        this.SoLuongDaDatCuaKH = Convert.ToInt32(red["SoLuong"]);
+      if (!Convert.IsDBNull(red["ThoiDiemDat"]))
+        this.ThoiDiemDatCuaKH = Convert.ToDateTime(red["ThoiDiemDat"]);
     }
     public int MaSP { get; set; }
     [StringLength(300)]

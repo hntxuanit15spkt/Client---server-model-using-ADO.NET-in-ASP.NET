@@ -11,7 +11,7 @@
   {
     using (Html.BeginForm("CapNhatGioHang", "GioHang", new { maGioHang = item.MaGioHang, maSP = item.MaSP, soLuong = item.SoLuong }))
     {
-      <div class="close"> </div>
+      @*<div class="close"> </div>*@
       <div class="cart-sec simpleCart_shelfItem">
         <div class="cart-item cyc">
           <img src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" class="img-responsive" alt="" />
@@ -70,8 +70,8 @@
     <span class="total1">@ViewBag.TongTienDonHang</span>
     <span>Giảm giá</span>
     <span class="total1">---</span>
-    <span>Phí vận chuyển</span>
-    <span class="total1">150.00</span>
+    @*<span>Phí vận chuyển</span>
+    <span class="total1">150.00</span>*@
     <div class="clearfix"></div>
   </div>
   <ul class="total_price">
@@ -80,7 +80,7 @@
     <div class="clearfix"> </div>
   </ul>
   <div class="clearfix"></div>
-  <a class="order" href="@Url.Action("DatHang","GioHang",new {@maGioHang=Model.FirstOrDefault().MaGioHang,@maKH=ViewBag.maKH })">Đặt hàng</a>
+  <a class="order" href="@Url.Action("DatHang","GioHang",new {@maGioHang=ViewBag.maGioHang,@maKH=ViewBag.maKH })">Đặt hàng</a>
 </div>
 @*<script>
   $('.edit_on').click(function () {
