@@ -67,6 +67,7 @@ namespace WebApplication1.Controllers
         ctgh = new CHITIETGIOHANG(dr);
         lstCTGH.Add(ctgh);
       }
+      ViewBag.maKH = MaKH;
       ViewBag.TongTienDonHang = TinhTongTien();
       return View(lstCTGH);
     }
@@ -152,9 +153,33 @@ namespace WebApplication1.Controllers
       }
       DataTable dt = cf.ExecuteQuery("select * from GIOHANG where MaGioHang=" + maGioHang);
       GIOHANG gh = LayGioHang(new GIOHANG(dt.Rows[0]).MaKH);
-      if(quantity!=)
+      //if(quantity!=)
       cf.ExecuteNonQuery("update CHITIETGIOHANG set SoLuong = " + quantity + " where MaGioHang=" + maGioHang + " and MaSP=" + maSP);
       return RedirectToAction("Index", new { @MaKH=gh.MaKH });
+    }
+    public ActionResult XoaSanPhamKhoiGioHang(int maGioHang, int maSP)
+    {
+      if (Session["GioHang"] == null)
+      {
+        return RedirectToAction("Index", "Home");
+      }
+      DataTable data = cf.ExecuteQuery("select * from SANPHAM where MaSP=" + maSP);
+      SANPHAM sp = new SANPHAM(data.Rows[0]);
+      if (sp == null)
+      {
+        //TRang đường dẫn không hợp lệ
+        Response.StatusCode = 404;
+        return null;
+      }
+      DataTable dt = cf.ExecuteQuery("select * from GIOHANG where MaGioHang=" + maGioHang);
+      GIOHANG gh = LayGioHang(new GIOHANG(dt.Rows[0]).MaKH);
+      cf.ExecuteNonQuery("delete from CHITIETGIOHANG where MaSP=" + maSP + " and MaGioHang=" + maGioHang);
+      return RedirectToAction("Index", new { @MaKH = gh.MaKH });
+    }
+    public ActionResult DatHang(int maGioHang, int maKH)
+    {
+      cf.ExecuteNonQuery("execute stored_DatHang @maGioHang="+maGioHang+",@maKH="+maKH);
+      return View();
     }
   }
 }

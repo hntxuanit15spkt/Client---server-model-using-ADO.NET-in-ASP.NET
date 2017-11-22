@@ -20,7 +20,7 @@
           <h3><a href="#">@item.TenSP</a></h3>
           <ul class="qty col-md-6">
             <li><p>Đơn giá: @item.DonGia</p></li>
-            <li><p>Số lượng: <input type="text" id="quantity" name="quantity" class="form-control input-number" value=@item.SoLuong disabled /></p></li>
+            <li><p>Số lượng: <input type="text" id="quantity" name="quantity" class="form-control input-number" value=@item.SoLuong></p></li>
             @*<li><p>Số lượng: @item.SoLuong</p></li>*@
             @*<li>
                 <p>
@@ -46,9 +46,10 @@
 
           </ul>
           <div>
-            <input type="button" id="edit_on" class="btn btn-primary col-md-2" value="Sửa"/>
-            <input type="submit" class="btn btn-primary col-md-2" value="Lưu"/>
-            <input type="button" id="edit_on" class="btn btn-primary col-md-2" value="Xóa" />
+            @*<input type="button" class="btn btn-primary col-md-2 edit_on" value="Sửa" />*@
+            <input type="submit" class="btn btn-primary col-md-2 save_on" value="Lưu" />
+            <a href="@Url.Action("XoaSanPhamKhoiGioHang","GioHang",new { @maSP =item.MaSP, @maGioHang =item.MaGioHang})" class="btn btn-primary col-md-2">Xóa</a>
+            @*<input type="button" class="btn btn-primary col-md-2" value="Xóa" />*@
           </div>
           @*<div class="delivery">
               <p>Service Charges : Rs.100.00</p>
@@ -75,17 +76,19 @@
   </div>
   <ul class="total_price">
     <li class="last_price"> <h4>Tổng cộng</h4></li>
-    <li class="last_price"><span>6350.00</span></li>
+    <li class="last_price"><span>@ViewBag.TongTienDonHang</span></li>
     <div class="clearfix"> </div>
   </ul>
   <div class="clearfix"></div>
-  <a class="order" href="#">Thanh toán</a>
+  <a class="order" href="@Url.Action("DatHang","GioHang",new {@maGioHang=Model.FirstOrDefault().MaGioHang,@maKH=ViewBag.maKH })">Đặt hàng</a>
 </div>
-
-
-<script>
-  $('#edit_on').click(function () {
+@*<script>
+  $('.edit_on').click(function () {
     debugger
     $('#quantity').prop('disabled', false);
   })
-</script>
+  $('.save_on').click(function () {
+    debugger
+    $('#quantity').prop('disabled', true);
+  })
+</script>*@
