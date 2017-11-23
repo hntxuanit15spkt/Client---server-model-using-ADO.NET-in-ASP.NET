@@ -4,12 +4,24 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
-using WebApplication1.Models;
-
 namespace WebApplication1.Models
 {
   public  class NHACUNGCAP
-    {  
+    {
+        public NHACUNGCAP(DataRow red)
+        {
+            this.MaNCC = Convert.ToInt32(red["MaNCC"]);
+            if (!Convert.IsDBNull(red["TenNCC"]))
+                this.TenNCC = red["TenNCC"].ToString();
+            if (!Convert.IsDBNull(red["DiaChi"]))
+                this.DiaChi = red["DiaChi"].ToString();
+            if (!Convert.IsDBNull(red["Email"]))
+                this.Email = red["Email"].ToString();
+            if (!Convert.IsDBNull(red["SoDienThoai"]))
+                this.SoDienThoai = red["SoDienThoai"].ToString();
+            if (!Convert.IsDBNull(red["Fax"]))
+                this.Fax = red["Fax"].ToString();
+        }
         public int MaNCC { get; set; }
         public string TenNCC { get; set; }
         public string DiaChi { get; set; }

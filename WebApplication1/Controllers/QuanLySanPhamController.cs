@@ -150,7 +150,7 @@ namespace WebApplication1.Controllers
                     }
                }
                cf.ExecuteNonQuery(string.Format("exec stored_ThemSanPham @TenSP = N'{0}', " +
-                      "@NgayCapNhat = '{1}', @DonGia = {2}, @MoTa = {3}, @HinhAnh = {4}, " +
+                      "@NgayCapNhat = '{1}', @DonGia = {2}, @MoTa = N'{3}', @HinhAnh = {4}, " +
                       "@SoLuongTon = {5}, @LuotXem = {6}, @LuotBinhChon = {7}, @MaLoaiSP = {8}, @DaXoa = 0, " +
                       "@NgayDang = '{9}', @MaSuKien = {10} ", sp.TenSP, sp.NgayCapNhat, sp.DonGia, sp.MoTa, sp.HinhAnh,
                       sp.SoLuongTon, sp.LuotXem, sp.LuotBinhChon, sp.MaLoaiSP, sp.NgayDang, sp.MaSuKien));
@@ -256,7 +256,7 @@ namespace WebApplication1.Controllers
                     return View(model);
                }
                cf.ExecuteNonQuery(string.Format("exec stored_SuaSanPham @MaSP={0},@TenSP = N'{1}', " +
-                      "@NgayCapNhat = '{2}', @DonGia = {3}, @MoTa = {4}, @HinhAnh = '{5}', " +
+                      "@NgayCapNhat = '{2}', @DonGia = {3}, @MoTa = '{4}', @HinhAnh = '{5}', " +
                       "@SoLuongTon = {6}, @LuotXem = {7}, @LuotBinhChon = {8}, @MaLoaiSP = {9}, " +
                       "@NgayDang = '{10}', @MaSuKien = {11} ", model.MaSP, model.TenSP, model.NgayCapNhat, model.DonGia,
                       model.MoTa, model.HinhAnh, model.SoLuongTon, model.LuotXem, model.LuotBinhChon, model.MaLoaiSP,

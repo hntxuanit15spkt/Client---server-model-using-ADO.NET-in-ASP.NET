@@ -42,7 +42,7 @@ namespace WebApplication1.Controllers
                     lstLND.Add(lnd);
                 }              
 
-                ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n=>n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+                ViewBag.MaLoaiNguoiDung = new SelectList(lstLND, "MaLoaiNguoiDung", "TenLoaiNguoiDung");
                 return View();
             }
             else
@@ -66,11 +66,11 @@ namespace WebApplication1.Controllers
                 lstLND.Add(lnd);
             }
 
-            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n => n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND, "MaLoaiNguoiDung", "TenLoaiNguoiDung");
 
             cf.ExecuteNonQuery(string.Format("exec stored_ThemNguoiDung @Ho = N'{0}', " +
-                      "@TenLot = N'{1}', @Ten = N'{2}', @GioiTinh = {3}, @DiaChi = {4}, " +
-                      "@SoDienThoai = {5}, @Email = {6}, @MaLoaiNguoiDung = {7}, @TaiKhoan = {8}, @MatKhau = {9}, " +
+                      "@TenLot = N'{1}', @Ten = N'{2}', @GioiTinh = {3}, @DiaChi = N'{4}', " +
+                      "@SoDienThoai = '{5}', @Email = N'{6}', @MaLoaiNguoiDung = {7}, @TaiKhoan = '{8}', @MatKhau = '{9}', " +
                       "@TrangThai = 0", nd.Ho,nd.TenLot, nd.Ten, nd.GioiTinh, nd.DiaChi, nd.SoDienThoai,
                       nd.Email, nd.MaLoaiNguoiDung,nd.TaiKhoan, nd.MatKhau));
 
@@ -79,18 +79,17 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult CapNhatThongTinNguoiDung(int? id)
         {
-            DataTable dt1 = cf.ExecuteQuery(string.Format("select * from NGUOIDUNG where MaNguoiDung={0}", id));
-            List<NGUOIDUNG> listND = new List<NGUOIDUNG>();
-            NGUOIDUNG nd = null;
-            foreach (DataRow dr in dt1.Rows)
-            {
-                nd = new NGUOIDUNG(dr);
-                listND.Add(nd);
-            }
+           
             if (id == null)
             {
                 Response.StatusCode = 404;
                 return null;
+            }
+            DataTable dt1 = cf.ExecuteQuery(string.Format("select * from NGUOIDUNG where MaNguoiDung={0}", id));
+            NGUOIDUNG nd = null;
+            foreach (DataRow dr in dt1.Rows)
+            {
+                nd = new NGUOIDUNG(dr);           
             }
             if (nd == null)
             {
@@ -105,7 +104,7 @@ namespace WebApplication1.Controllers
                 lstLND.Add(lnd);
             }
 
-            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n => n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
+            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND, "MaLoaiNguoiDung", "TenLoaiNguoiDung", nd.MaLoaiNguoiDung);
             return View(nd);
         }
         [ValidateInput(false)]
@@ -124,20 +123,14 @@ namespace WebApplication1.Controllers
                 lstLND.Add(lnd);
             }
 
-            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND.OrderBy(n => n.MaLoaiNguoiDung), "MaLoaiNguoiDung", "TenLoaiNguoiDung");
-            cf.ExecuteNonQuery("EXEC dbo.store_CapNhatThongTinNguoiDung"  
-                                + " @Ho = N'" + model.Ho + "',"
-                                + " @TenLot = N'" +model.TenLot + "',"
-                                + " @Ten = N'" + model.Ten + " ',"
-                                + " @GioiTinh =" + model.GioiTinh + ","
-                                + " @DiaChi = N'" +model.DiaChi +"',"
-                                + " @SoDienThoai = '" + model.SoDienThoai + "',"
-                                + " @MaNguoiDung = " + model.MaNguoiDung + ","
-                                + " @Email = N'" + model.Email+"',"
-                                + " @MaLoaiNguoiDung =" +model.MaLoaiNguoiDung +","
-                                + " @TaiKhoan = '" +model.TaiKhoan+ "',"
-                                + " @MatKhau = '" + model.MatKhau +"',"
-                                + " @TrangThai = "+model.TrangThai);
+            ViewBag.MaLoaiNguoiDung = new SelectList(lstLND, "MaLoaiNguoiDung", "TenLoaiNguoiDung", model.MaLoaiNguoiDung);
+            
+            cf.ExecuteNonQuery(string.Format("exec dbo.CapNhatThongTinNV @Ho=N'{0}',@TenLot = N'{1}', " +
+                      "@Ten = N'{2}', @GioiTinh = {3}, @DiaChi = N'{4}', @SoDienThoai = '{5}', " +
+                      "@MaNguoiDung = {6}, @Email = N'{7}', @MaLoaiNguoiDung = {8}, @TaiKhoan = '{9}', " +
+                      "@MatKhau = '{10}', @TrangThai = {11} ", model.Ho, model.TenLot, model.Ten, model.GioiTinh,
+                      model.DiaChi, model.SoDienThoai, model.MaNguoiDung, model.Email, model.MaLoaiNguoiDung, model.TaiKhoan,
+                      model.MatKhau, model.TrangThai));
          
             return RedirectToAction("Index");            
         }

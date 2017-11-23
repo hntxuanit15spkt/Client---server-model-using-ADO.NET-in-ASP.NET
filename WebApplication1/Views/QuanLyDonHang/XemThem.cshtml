@@ -1,14 +1,11 @@
 ﻿@model WebApplication1.Models.DONDATHANG
+
 @{
     ViewBag.Title = "CapNhatThongTinNguoiDung";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
 }
 
 <h2>Thông tin đơn hàng</h2>
-
-
-@using (Html.BeginForm("XemThem", "QuanLyDonHang", FormMethod.Post, new { @enctype = "multipart/form-data" }))
-{
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         <hr />
@@ -92,12 +89,9 @@
                 @Html.EditorFor(model => model.PhiVanChuyen, new { htmlAttributes = new { @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.PhiVanChuyen)
             </div>
-        </div>
-
-        @Html.ActionLink("Duyệt đơn hàng", "DuyetDonHang", null, new { @class = "btn btn-success" })
+        </div>      
 
     </div>
-}
 
 <div>
     @Html.ActionLink("Back to List", "Index")

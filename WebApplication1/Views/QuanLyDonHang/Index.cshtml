@@ -1,78 +1,69 @@
-﻿@using WebApplication1.Models
-@model IEnumerable<DONDATHANG>
-
+﻿@using WebApplication1.Models;
+@model IEnumerable<WebApplication1.Models.DONDATHANG>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quan Lý Đơn Hàng";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
-    //Khởi tạo control WebGrid
-    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 25); //25 = số dòng hiển thị
 }
 
-<br /><br />
-@*Thể hiện dữ liệu thông qua control webGrid*@
-
-<div>
-    <form>
-
-    </form>
-</div>
-
+<h2>Quản lý đơn hàng</h2>
 <br />
+@{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã đơn hàng</th>
+                            <th>Thời điểm đặt</th>
+                            <th>Ngày giao dự kiến</th>
+                            <th>Tổng tiền</th>
+                            <th>NV duyệt</th>
+                            <th>Đã giao</th>
+                            <th> </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="active">
+                                <td>
+                                    @item.MaDDH
+                                </td>
+                                <td>
+                                    @item.ThoiDiemDat
+                                </td>
+                                <td>
+                                    @item.NgayGiaoDuKien
+                                </td>
+                                <td>
+                                    @item.TongTien
+                                </td>
+                                <td>
+                                    @item.MaNV
+                                </td>
+                                <td>
+                                    @item.TinhTrangGiaoHang
+                                </td>
+                                <td class="center" style="color:red">
+                                    @*<a style="color:red" href="@Url.Action("DuyetDonHang","QuanLyDonHang", new {@MaDDH = @item.MaDDH, @MaNV = })">
+                                        Duyệt
+                                    </a>*@
+                                    
 
-@grid.GetHtml(
-             tableStyle: "divTable",
-             headerStyle: "gridHead",
-             footerStyle: "gridFooter",
-             rowStyle: "gridRow",
-             alternatingRowStyle: "gridAltRow",
-             columns: grid.Columns(
-             grid.Column("MaDDH", "Mã ĐơnHàng"),
-             grid.Column("MaKH", "Mã Khách Hàng"),
-             grid.Column("ThoiDiemDat", "Thời điểm đặt"),
-             grid.Column("NgayGiaoDuKien", "Ngày giao dự kiến"),
-             grid.Column("MaNV", "Mã Nhân Viên"),
-             grid.Column("TongTien", "Tổng Tiền"),
-             grid.Column("TinhTrangGiaoHang", "Tình Trạng"),
 
-             grid.Column(format: p => @Html.ActionLink("Xem thêm", "XemThem", new { id = p.MaDDH }))
-             ))
-
-    
-@*Css cho từng Style của table*@
-<style>
-    .divTable {
-        width: 100%;
-        border: 1px solid #999999;
-    }
-
-        .divTable td {
-            border: 1px solid #999999;
-        }
-
-    .gridHead {
-        background-color: Green;
-    }
-
-        .gridHead > th > a {
-            color: #fff;
-        }
-
-    .gridFooter {
-        font-weight: bold;
-    }
-    /*.gridRow {
-        color:#fff;
-        background-color:blueviolet;
-    }
-    .gridAltRow {
-        color:#fff;
-        background-color:darkorange;
-    }*/
-</style>
-
-<style>
-    .FooterAdmin {
-        display: none;
-    }
-</style>
-
+                                </td>
+                                <td class="center">
+                                    <a style="color:red" href="@Url.Action("XemThem","QuanLyDonHang", new {@id = @item.MaDDH}) ">
+                                        Chi tiết
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

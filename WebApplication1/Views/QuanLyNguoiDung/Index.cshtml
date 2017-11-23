@@ -1,69 +1,61 @@
-﻿@using WebApplication1.Models
-@model IEnumerable<NGUOIDUNG>
-
+﻿@using WebApplication1.Models;
+@model IEnumerable<WebApplication1.Models.NGUOIDUNG>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Quan Lý Người Dùng";
     Layout = "~/Views/Layout/AdminLayout.cshtml";
-    //Khởi tạo control WebGrid
-    WebGrid grid = new WebGrid(source: Model, rowsPerPage: 25); //25 = số dòng hiển thị
 }
 
-@Html.ActionLink("Thêm người dùng", "ThemNguoiDung", null, new { @class = "btn btn-success" })
-<br /><br />
-@*Thể hiện dữ liệu thông qua control webGrid*@
-
-@grid.GetHtml(
-             tableStyle: "divTable",
-             headerStyle: "gridHead",
-             footerStyle: "gridFooter",
-             rowStyle: "gridRow",
-             alternatingRowStyle: "gridAltRow",
-             columns: grid.Columns(
-             grid.Column("MaNguoiDung", "Mã Người Dùng"),
-             grid.Column("Ho", "Họ"),
-             grid.Column("TenLot", "Tên Lót"),
-             grid.Column("Ten", "Tên"),
-             grid.Column("TrangThai", "Trạng thái"),
-
-             grid.Column(format: p => @Html.ActionLink("Chỉnh sửa", "CapNhatThongTinNguoiDung", new { id = p.MaNguoiDung }))
-             ))
-
-
-@*Css cho từng Style của table*@
-<style>
-    .divTable {
-        width: 100%;
-        border: 1px solid #999999;
-    }
-
-        .divTable td {
-            border: 1px solid #999999;
-        }
-
-    .gridHead {
-        background-color: Green;
-    }
-
-        .gridHead > th > a {
-            color: #fff;
-        }
-
-    .gridFooter {
-        font-weight: bold;
-    }
-    /*.gridRow {
-        color:#fff;
-        background-color:blueviolet;
-    }
-    .gridAltRow {
-        color:#fff;
-        background-color:darkorange;
-    }*/
-</style>
-
-<style>
-    .FooterAdmin {
-        display: none;
-    }
-</style>
-
+<h2>Quản lý người dùng</h2>
+<br />
+@{
+    @Html.ActionLink("Thêm người dùng", "ThemNguoiDung", null, new { @class = "btn btn-success" })
+    <br />
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã người dùng</th>
+                            <th>Họ Tên</th>
+                            <th>Giới tính</th>
+                            <th>Số điện thoại</th>
+                            <th>Trạng thái</th>
+                            <th></th>
+                                <th> </th>
+                                <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="active">
+                                <td>
+                                    @item.MaNguoiDung
+                                </td>
+                                <td>
+                                    @item.Ho @item.TenLot @item.Ten
+                                </td>
+                                <td>
+                                    @item.GioiTinh
+                                </td>
+                                <td>
+                                    @item.SoDienThoai
+                                </td>
+                                <td>
+                                    @item.TrangThai
+                                </td>                              
+                                
+                                <td class="center">
+                                      <a style="color:red" href="@Url.Action("CapNhatThongTinNguoiDung","QuanLyNguoiDung", new {@id = @item.MaNguoiDung}) ">
+                                           Sửa
+                                      </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

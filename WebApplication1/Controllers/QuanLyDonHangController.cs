@@ -27,15 +27,15 @@ namespace WebApplication1.Controllers
             }
             return View(listDDH.OrderByDescending(n => n.MaDDH));
         }
-
-        public ActionResult DuyetDonHang(int? MaDDH)
+       
+        public ActionResult DuyetDonHang(int? MaDDH, int ? MaNV)
         {
-            if (MaDDH == null)
+            if (MaDDH == null || MaNV == null)
             {
                 Response.StatusCode = 404;
                 return null;
             }
-            DataTable dtDDH = cf.ExecuteQuery(String.Format("select * from DONDATHANG where MaSP = {0}", MaDDH));
+            DataTable dtDDH = cf.ExecuteQuery(String.Format("select * from DONDATHANG where MaDDH = {0}", MaDDH));
             DONDATHANG ddh = null;
             foreach (DataRow dr in dtDDH.Rows)
             {
@@ -45,12 +45,16 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            if (cf.ExecuteNonQuery("exec store_DuyetDonHang @MaDDH=" + MaDDH) > 0)
+            if (ddh.MaNV == 0 )
             {
-                TempData["result"] = "Duyệt đơn hàng thành công!";
+                if (cf.ExecuteNonQuery(string.Format("exec store_DuyetDonHang @MaDDH={0}", MaDDH)) > 0)
+                {
+                    TempData["result"] = "Duyệt đơn hàng thành công!";
+                    return RedirectToAction("Index");
+                }
+                TempData["error"] = "Duyệt đơn hàng thất bại!";
                 return RedirectToAction("Index");
             }
-            TempData["error"] = "Duyệt đơn hàng thất bại!";
             return RedirectToAction("Index");
         }
 

@@ -173,24 +173,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <div class="navigation">
         <h3>Featured</h3>
         <ul>
-          <li><a href="#"><i class="fa fa-address-book" aria-hidden="true"></i></a></li>
-          <li><a href="#">Quản lý sản phẩm</a></li>
+          <li><a href="#"><i class="sp"></i></a></li>
+          <li><a href="@Url.Action("Index","QuanLySanPham")">Quản lý sản phẩm</a></li>
         </ul>
-        <ul>
-          <li><a href="#"><i class="art"></i></a></li>
+        @*<ul>
+          <li><a href="#"><i class="pn"></i></a></li>
           <li><a href="@Url.Action("NhapHang","QuanLyPhieuNhap")">Nhập hàng</a></li>
+        </ul>*@
+        <ul>
+          <li><a href="#"><i class="nd"></i></a></li>
+          <li><a href="@Url.Action("Index","QuanLyNguoiDung")">Người dùng</li>
         </ul>
         <ul>
-          <li><a href="#"><i class="user"></i></a></li>
-          <li><a href="#">Users</a></li>
+          <li><a href="#"><i class="dh"></i></a></li>
+            <li><a href="@Url.Action("Index","QuanLyDonHang")">Đơn hàng</li>
         </ul>
         <ul>
-          <li><a href="#"><i class="fat"></i></a></li>
-          <li><a href="#">Favorites</a></li>
-        </ul>
-        <ul>
-          <li><a href="#"><i class="speed"></i></a></li>
-          <li><a href="#">Speed</a></li>
+          <li><a href="#"><i class="ncc"></i></a></li>
+          <li><a href="@Url.Action("Index","QuanLyNhaCungCap")">Nhà cung cấp</a></li>
         </ul>
         <ul>
           <li><a href="#"><i class="setting"></i></a></li>
@@ -759,7 +759,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
      </div>
      <div class="footer">
           <div class="copyright text-center">
-               <p>&copy; 2015 All rights reserved | Template by  <a href="http://w3layouts.com">  W3layouts</a></p>
+               <p>&copy; 2015 All rights reserved | Template by  <a href="">  W3layouts</a></p>
           </div>
      </div>
      @RenderSection("scripts", required: false)

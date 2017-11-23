@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
 using WebApplication1.DAL;
 using WebApplication1.Models;
 using WebApplication1.Helper;
 using System.Data;
-using PagedList;
 
 namespace WebApplication1.Controllers
 {
-     public class SanPhamController : Controller
+    public class SanPhamController : Controller
      {
           // GET: Test
 

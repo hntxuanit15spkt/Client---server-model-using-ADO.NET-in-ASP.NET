@@ -1,0 +1,70 @@
+﻿@using WebApplication1.Models;
+@model IEnumerable<WebApplication1.Models.NHACUNGCAP>
+@{
+    ViewBag.Title = "QuanLyNCC";
+    Layout = "~/Views/Layout/AdminLayout.cshtml";
+}
+
+<h2>Nhà cung cấp</h2>
+<br />
+@{
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Mã NCC</th>
+                            <th>Tên NCC</th>
+                            <th>Địa chỉ</th>
+                            <th>Email</th>
+                            <th>Số điện thoại</th>
+                            <th>Fax</th>
+                            @*<th></th>
+                            <th> </th>
+                            <th> </th>*@
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="active">
+                                <td>
+                                    @item.MaNCC
+                                </td>
+                                <td>
+                                    @item.TenNCC
+                                </td>
+                                <td>
+                                    @item.DiaChi
+                                </td>
+                                <td>
+                                    @item.Email
+                                </td>
+                                <td>
+                                    @item.SoDienThoai
+                                </td>
+                                <td>
+                                    @item.Fax
+                                </td>
+                                @*<td class="center">
+                                    <a href="@Url.Action("SuaTaiKhoan","QuanLyTaiKhoan",new {@MaNguoiDung = @item.NGUOIDUNG.MaNguoiDung})">
+                                        <p class="fa fa-pencil-square-o">
+                                            Sửa
+                                        </p>
+                                    </a>
+                                </td>
+                                <td class="center">
+                                    <a href="@Url.Action("XoaTaiKhoan","QuanLyTaiKhoan", new {@MaNguoiDung=@item.NGUOIDUNG.MaNguoiDung})">
+                                        Xóa
+                                    </a>
+                                </td>*@
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}

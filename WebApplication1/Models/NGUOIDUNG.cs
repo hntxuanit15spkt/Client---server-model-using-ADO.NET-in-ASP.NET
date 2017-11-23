@@ -10,23 +10,34 @@ namespace WebApplication1.Models
 {
   public class NGUOIDUNG
   {
-    private DataRow dataRow;
 
-    public NGUOIDUNG(DataRow dataRow)
-    {
-      this.Ho = dataRow["Ho"].ToString();
-      this.TenLot = dataRow["TenLot"].ToString();
-      this.Ten = dataRow["Ten"].ToString();
-      this.GioiTinh = (bool)dataRow["GioiTinh"];
-      this.DiaChi = dataRow["DiaChi"].ToString();
-      this.SoDienThoai = dataRow["SoDienThoai"].ToString();
-      this.MaNguoiDung = (int)dataRow["MaNguoiDung"];
-      this.Email = dataRow["Email"].ToString();
-      this.MaLoaiNguoiDung = (int)dataRow["MaLoaiNguoiDung"];
-      this.TaiKhoan = dataRow["TaiKhoan"].ToString();
-      this.MatKhau = dataRow["MatKhau"].ToString();
-      this.TrangThai = (bool)dataRow["TrangThai"];
-    }
+        public NGUOIDUNG(DataRow red)
+        {
+            this.MaNguoiDung = Convert.ToInt32(red["MaNguoiDung"]);
+            if (!Convert.IsDBNull(red["Ho"]))
+                this.Ho = red["Ho"].ToString();
+            if (!Convert.IsDBNull(red["TenLot"]))
+                this.TenLot = red["TenLot"].ToString();
+            if (!Convert.IsDBNull(red["Ten"]))
+                this.Ten = red["Ten"].ToString();
+            if (!Convert.IsDBNull(red["GioiTinh"]))
+                this.GioiTinh = Convert.ToBoolean(red["GioiTinh"]);
+            if (!Convert.IsDBNull(red["DiaChi"]))
+                this.DiaChi = red["DiaChi"].ToString();
+            if (!Convert.IsDBNull(red["SoDienThoai"]))
+                this.SoDienThoai = red["SoDienThoai"].ToString();
+            if (!Convert.IsDBNull(red["Email"]))
+                this.Email = red["Email"].ToString();
+            if (!Convert.IsDBNull(red["MaLoaiNguoiDung"]))
+                this.MaLoaiNguoiDung = Convert.ToInt32(red["MaLoaiNguoiDung"]);
+            if (!Convert.IsDBNull(red["TaiKhoan"]))
+                this.TaiKhoan = red["TaiKhoan"].ToString();
+            if (!Convert.IsDBNull(red["MatKhau"]))
+                this.MatKhau = red["MatKhau"].ToString();           
+            if (!Convert.IsDBNull(red["TrangThai"]))
+                this.TrangThai = Convert.ToBoolean(red["TrangThai"]);
+        }
+   
 
     public string Ho { get; set; }
     public string TenLot { get; set; }

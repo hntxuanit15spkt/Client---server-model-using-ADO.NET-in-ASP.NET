@@ -13,8 +13,8 @@
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
-        <span style="color:red;">@Html.Raw(ViewBag.upload as string) <br /> @Html.Raw(ViewBag.upload1 as string) </span>
 
+        <span style="color:red;">@Html.Raw(ViewBag.upload as string) <br /> @Html.Raw(ViewBag.upload1 as string) </span>
         <div class="form-group">
             @Html.LabelFor(model => model.Ho, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -62,7 +62,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MaNguoiDung, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MaNguoiDung)
+                @Html.EditorFor(model => model.MaNguoiDung, new { htmlAttributes = new { @readonly = "readonly" } })
                 @Html.ValidationMessageFor(model => model.MaNguoiDung)
             </div>
         </div>
@@ -75,11 +75,11 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.MaLoaiNguoiDung, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MaLoaiNguoiDung)
+            <div class="col-md-3">
+                @Html.DropDownList("MaLoaiNguoiDung", null, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MaLoaiNguoiDung)
             </div>
-        </div>        
+        </div>     
         <div class="form-group">
             @Html.LabelFor(model => model.TaiKhoan, new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -101,7 +101,6 @@
                 @Html.ValidationMessageFor(model => model.TrangThai)
             </div>
         </div>
-
 
 
         <div class="form-group">
