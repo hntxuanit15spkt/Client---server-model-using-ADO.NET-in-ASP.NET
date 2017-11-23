@@ -7,7 +7,7 @@
     @foreach (var item in Model)
     {
       <li style="display: inline;">
-        <a class="color1" href="@Url.Action("DanhSachSanPhamTheoLoai", "SanPham", new { MaLoaiSP = item.MaLoaiSP})">@item.TenLoai</a>
+        <a class="color1" href="@Url.Action("DanhSachSanPhamTheoLoai", "SanPham", new { @MaLoaiSP = item.MaLoaiSP,@MaKH=ViewBag.MaKH})">@item.TenLoai</a>
         @*<div class="mepanel" style="display: none; opacity: 1;">
           <div class="row">
             <div class="col1">

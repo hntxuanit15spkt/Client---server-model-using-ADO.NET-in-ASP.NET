@@ -31,9 +31,9 @@
               </div>
             </a>
             <ul class="dropdown-menu drp-mnu">
-              <li> <a href="#"><i class="fa fa-cog"></i> Liệt kê sản phẩm</a> </li>
+              <li> <a href="@Url.Action("DSSanPhamKhachHangDaMua","SanPham",new { @MaKH=Model.MaNguoiDung})"><i class="fa fa-cog"></i> Liệt kê sản phẩm</a> </li>
               <li> <a href="@Url.Action("CapNhatThongTinNguoiDung","QuanLyNguoiDung",new { @id=Model.MaNguoiDung })"><i class="fa fa-user"></i> Chỉnh sửa thông tin cá nhân</a> </li>
-              <li> <a href="#"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
+              <li> <a href="@Url.Action("Index","Home")"><i class="fa fa-sign-out"></i> Đăng xuất</a> </li>
             </ul>
           </li>
           @*</ul>*@
@@ -48,7 +48,7 @@
         </li>
       </ul>
       @*Chèn partial view giỏ hàng vào layout( Tách icon giỏ hàng sang 1 partial view mới)*@
-      @*@Html.Action("GioHangPartial", "GioHang")*@
+      @Html.Action("GioHangPartial", "GioHang", new { @id = Model.MaNguoiDung })
       <div class="clearfix"> </div>
     </div>
     <div class="clearfix"> </div>

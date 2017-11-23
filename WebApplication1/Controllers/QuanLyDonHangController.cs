@@ -27,15 +27,15 @@ namespace WebApplication1.Controllers
             }
             return View(listDDH.OrderByDescending(n => n.MaDDH));
         }
-       
-        public ActionResult DuyetDonHang(int? MaDDH, int ? MaNV)
+
+        public ActionResult DuyetDonHang(int? MaDDH)
         {
-            if (MaDDH == null || MaNV == null)
+            if (MaDDH == null)
             {
                 Response.StatusCode = 404;
                 return null;
             }
-            DataTable dtDDH = cf.ExecuteQuery(String.Format("select * from DONDATHANG where MaDDH = {0}", MaDDH));
+            DataTable dtDDH = cf.ExecuteQuery(String.Format("select * from DONDATHANG where MaSP = {0}", MaDDH));
             DONDATHANG ddh = null;
             foreach (DataRow dr in dtDDH.Rows)
             {
@@ -45,49 +45,45 @@ namespace WebApplication1.Controllers
             {
                 return HttpNotFound();
             }
-            if (ddh.MaNV == 0 )
+            if (cf.ExecuteNonQuery("exec store_DuyetDonHang @MaDDH=" + MaDDH) > 0)
             {
-                if (cf.ExecuteNonQuery(string.Format("exec store_DuyetDonHang @MaDDH={0}", MaDDH)) > 0)
-                {
-                    TempData["result"] = "Duyệt đơn hàng thành công!";
-                    return RedirectToAction("Index");
-                }
-                TempData["error"] = "Duyệt đơn hàng thất bại!";
+                TempData["result"] = "Duyệt đơn hàng thành công!";
                 return RedirectToAction("Index");
             }
+            TempData["error"] = "Duyệt đơn hàng thất bại!";
             return RedirectToAction("Index");
         }
 
 
 
-        [HttpGet]
-        public ActionResult XemThem(int? id)
-        {
-            if (id == null)
-            {
-                Response.StatusCode = 404;
-                return null;
-            }
-            DataTable dtDDH = cf.ExecuteQuery(String.Format("select * from DONDATHANG where MaDDH = {0}", id));
-            DONDATHANG ddh = null;
-            foreach (DataRow dr in dtDDH.Rows)
-            {
-                ddh = new DONDATHANG(dr);
-            }
-            if (ddh == null)
-            {
-                return HttpNotFound();
-            }            
-            return View(ddh);
-        }
-
-        [ValidateInput(false)]
-        [HttpPost]
-        public ActionResult XemThem(DONDATHANG model)
-        {        
-            cf.ExecuteNonQuery("SELECT *FROM dbo.thongtinDDH(" + model.MaDDH + ")");
-            return RedirectToAction("Index");
-        }
-
+    [HttpGet]
+    public ActionResult XemThem(int? id)
+    {
+      if (id == null)
+      {
+        Response.StatusCode = 404;
+        return null;
+      }
+      DataTable dtDDH = cf.ExecuteQuery(String.Format("select * from DONDATHANG where MaDDH = {0}", id));
+      DONDATHANG ddh = null;
+      foreach (DataRow dr in dtDDH.Rows)
+      {
+        ddh = new DONDATHANG(dr);
+      }
+      if (ddh == null)
+      {
+        return HttpNotFound();
+      }
+      return View(ddh);
     }
+
+    [ValidateInput(false)]
+    [HttpPost]
+    public ActionResult XemThem(DONDATHANG model)
+    {
+      cf.ExecuteNonQuery("SELECT *FROM dbo.thongtinDDH(" + model.MaDDH + ")");
+      return RedirectToAction("Index");
+    }
+
+  }
 }

@@ -11,123 +11,129 @@ using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-     public class QuanLySanPhamController : Controller
-     {
-          // GET: QuanLySanPham
-          Config cf = new Config(Connect.ConnectString);
-          public ActionResult Index()
+  public class QuanLySanPhamController : Controller
+  {
+    // GET: QuanLySanPham
+    Config cf = new Config(Connect.ConnectString);
+    public ActionResult Index()
+    {
+      DataTable dtNguoiDung = cf.ExecuteQuery("select * from NGUOIDUNG where TaiKhoan ='" + Connect.username + "'and MatKhau='" + Connect.password + "'");
+      NGUOIDUNG nguoiDung = new NGUOIDUNG(dtNguoiDung.Rows[0]);
+      if (nguoiDung.MaLoaiNguoiDung == 4 || nguoiDung.MaLoaiNguoiDung == 5)
+      {
+        DataTable dtLstSP = cf.ExecuteQuery("select * from sanpham where daxoa=0");
+        List<SANPHAM> lsp = new List<SANPHAM>();
+        SANPHAM sp = null;
+        foreach (DataRow dr in dtLstSP.Rows)
+        {
+          sp = new SANPHAM(dr);
+          lsp.Add(sp);
+        }
+        return View(lsp);
+      }
+      return RedirectToAction("ThongBaoKhongDuQuyenTruyCap", "Home");
+    }
+    [HttpGet]
+    public ActionResult TaoMoi()
+    {
+      if (cf.Connection())
+      {
+        //Load dropdownlist Mã Sự kiện và dropdownlist loại sp
+        DataTable dtSuKien = cf.ExecuteQuery("select * from SUKIEN");
+        DataTable dtLoaiSP = cf.ExecuteQuery("select * from LOAISANPHAM");
+        List<LOAISANPHAM> lstLSP = new List<LOAISANPHAM>();
+        LOAISANPHAM lsp = null;
+        foreach (DataRow item in dtLoaiSP.Rows)
+        {
+          lsp = new LOAISANPHAM(item);
+          lstLSP.Add(lsp);
+        }
+        List<SUKIEN> lstLSK = new List<SUKIEN>();
+        SUKIEN SuKien = null;
+        foreach (DataRow item in dtSuKien.Rows)
+        {
+          SuKien = new SUKIEN(item);
+          lstLSK.Add(SuKien);
+        }
+        ViewBag.MaSuKien = new SelectList(lstLSK, "MaSuKien", "TenSuKien");
+        ViewBag.MaLoaiSP = new SelectList(lstLSP, "MaLoaiSP", "TenLoai");
+        return View();
+      }
+      else
+      {
+        TempData["result"] = "Kết nối cơ sở dữ liệu không thành công!";
+        return RedirectToAction("Index", "Home");
+      }
+    }
+    [ValidateInput(false)]
+    [HttpPost]
+    public ActionResult TaoMoi(SANPHAM sp, HttpPostedFileBase[] HinhAnh)
+    {
+      DataTable dtSuKien = cf.ExecuteQuery("select * from SUKIEN");
+      DataTable dtLoaiSP = cf.ExecuteQuery("select * from LOAISANPHAM");
+      List<LOAISANPHAM> lstLSP = new List<LOAISANPHAM>();
+      LOAISANPHAM lsp = null;
+      foreach (DataRow item in dtLoaiSP.Rows)
+      {
+        lsp = new LOAISANPHAM(item);
+        lstLSP.Add(lsp);
+      }
+      List<SUKIEN> lstLSK = new List<SUKIEN>();
+      SUKIEN SuKien = null;
+      foreach (DataRow item in dtSuKien.Rows)
+      {
+        SuKien = new SUKIEN(item);
+        lstLSK.Add(SuKien);
+      }
+      ViewBag.MaSuKien = new SelectList(lstLSK, "MaSuKien", "TenSuKien");
+      ViewBag.MaLoaiSP = new SelectList(lstLSP, "MaLoaiSP", "TenLoai");
+      int loi = 0;
+      for (int i = 0; i < HinhAnh.Count(); i++)
+      {
+        if (HinhAnh[i] != null)
+        {
+          //Kiểm tra nội dung hình ảnh
+          if (HinhAnh[i].ContentLength > 0)
           {
-               DataTable dtLstSP = cf.ExecuteQuery("select * from sanpham where daxoa=0");
-               List<SANPHAM> lsp = new List<SANPHAM>();
-               SANPHAM sp = null;
-               foreach (DataRow dr in dtLstSP.Rows)
-               {
-                    sp = new SANPHAM(dr);
-                    lsp.Add(sp);
-               }
-               return View(lsp);
+            //Kiểm tra định dạng hình ảnh
+            if (HinhAnh[i].ContentType != "image/jpeg" && HinhAnh[i].ContentType != "image/png" && HinhAnh[i].ContentType != "image/gif" && HinhAnh[i].ContentType != "image/jpg")
+            {
+              ViewBag.upload += "Hình ảnh" + i + " không hợp lệ <br />";
+              loi++;
+            }
+            else
+            {
+              //Kiểm tra hình ảnh tồn tại
+              //Lấy tên hình ảnh
+              var fileName = Path.GetFileName(HinhAnh[0].FileName);
+              //Lấy hình ảnh chuyển vào thư mục hình ảnh 
+              var path = Path.Combine(Server.MapPath("~/Content/HinhAnhSP"), fileName);
+              //Nếu thư mục chứa hình ảnh đó rồi thì xuất ra thông báo
+              if (System.IO.File.Exists(path))
+              {
+                ViewBag.upload1 = "Hình " + i + "đã tồn tại <br />";
+                loi++;
+              }
+            }
           }
-          [HttpGet]
-          public ActionResult TaoMoi()
-          {
-               if (cf.Connection())
-               {
-                    //Load dropdownlist Mã Sự kiện và dropdownlist loại sp
-                    DataTable dtSuKien = cf.ExecuteQuery("select * from SUKIEN");
-                    DataTable dtLoaiSP = cf.ExecuteQuery("select * from LOAISANPHAM");
-                    List<LOAISANPHAM> lstLSP = new List<LOAISANPHAM>();
-                    LOAISANPHAM lsp = null;
-                    foreach (DataRow item in dtLoaiSP.Rows)
-                    {
-                         lsp = new LOAISANPHAM(item);
-                         lstLSP.Add(lsp);
-                    }
-                    List<SUKIEN> lstLSK = new List<SUKIEN>();
-                    SUKIEN SuKien = null;
-                    foreach (DataRow item in dtSuKien.Rows)
-                    {
-                         SuKien = new SUKIEN(item);
-                         lstLSK.Add(SuKien);
-                    }
-                    ViewBag.MaSuKien = new SelectList(lstLSK, "MaSuKien", "TenSuKien");
-                    ViewBag.MaLoaiSP = new SelectList(lstLSP, "MaLoaiSP", "TenLoai");
-                    return View();
-               }
-               else
-               {
-                    TempData["result"] = "Kết nối cơ sở dữ liệu không thành công!";
-                    return RedirectToAction("Index", "Home");
-               }
-          }
-          [ValidateInput(false)]
-          [HttpPost]
-          public ActionResult TaoMoi(SANPHAM sp, HttpPostedFileBase[] HinhAnh)
-          {
-               DataTable dtSuKien = cf.ExecuteQuery("select * from SUKIEN");
-               DataTable dtLoaiSP = cf.ExecuteQuery("select * from LOAISANPHAM");
-               List<LOAISANPHAM> lstLSP = new List<LOAISANPHAM>();
-               LOAISANPHAM lsp = null;
-               foreach (DataRow item in dtLoaiSP.Rows)
-               {
-                    lsp = new LOAISANPHAM(item);
-                    lstLSP.Add(lsp);
-               }
-               List<SUKIEN> lstLSK = new List<SUKIEN>();
-               SUKIEN SuKien = null;
-               foreach (DataRow item in dtSuKien.Rows)
-               {
-                    SuKien = new SUKIEN(item);
-                    lstLSK.Add(SuKien);
-               }
-               ViewBag.MaSuKien = new SelectList(lstLSK, "MaSuKien", "TenSuKien");
-               ViewBag.MaLoaiSP = new SelectList(lstLSP, "MaLoaiSP", "TenLoai");
-               int loi = 0;
-               for (int i = 0; i < HinhAnh.Count(); i++)
-               {
-                    if (HinhAnh[i] != null)
-                    {
-                         //Kiểm tra nội dung hình ảnh
-                         if (HinhAnh[i].ContentLength > 0)
-                         {
-                              //Kiểm tra định dạng hình ảnh
-                              if (HinhAnh[i].ContentType != "image/jpeg" && HinhAnh[i].ContentType != "image/png" && HinhAnh[i].ContentType != "image/gif" && HinhAnh[i].ContentType != "image/jpg")
-                              {
-                                   ViewBag.upload += "Hình ảnh" + i + " không hợp lệ <br />";
-                                   loi++;
-                              }
-                              else
-                              {
-                                   //Kiểm tra hình ảnh tồn tại
-                                   //Lấy tên hình ảnh
-                                   var fileName = Path.GetFileName(HinhAnh[0].FileName);
-                                   //Lấy hình ảnh chuyển vào thư mục hình ảnh 
-                                   var path = Path.Combine(Server.MapPath("~/Content/HinhAnhSP"), fileName);
-                                   //Nếu thư mục chứa hình ảnh đó rồi thì xuất ra thông báo
-                                   if (System.IO.File.Exists(path))
-                                   {
-                                        ViewBag.upload1 = "Hình " + i + "đã tồn tại <br />";
-                                        loi++;
-                                   }
-                              }
-                         }
-                    }
-                    else
-                    {
-                         //db.SANPHAMs.Add(sp);
-                         cf.ExecuteNonQuery(string.Format("exec stored_ThemSanPham @TenSP = N'{0}', " +
-                            "@NgayCapNhat = '{1}', @DonGia = {2}, @MoTa = {3}, @HinhAnh = {4}, " +
-                            "@SoLuongTon = {5}, @LuotXem = {6}, @LuotBinhChon = {7}, @MaLoaiSP = {8}, @DaXoa = 0, " +
-                            "@NgayDang = '{9}', @MaSuKien = {10} ", sp.TenSP, sp.NgayCapNhat, sp.DonGia, sp.MoTa, sp.HinhAnh,
-                            sp.SoLuongTon, sp.LuotXem, sp.LuotBinhChon, sp.MaLoaiSP, sp.NgayDang, sp.MaSuKien));
-                         //db.SaveChanges();
-                         return RedirectToAction("Index");
-                    }
-               }
-               if (loi > 0)
-               {
-                    return View(sp);
-               }
-               sp.HinhAnh = HinhAnh[0].FileName;
+        }
+        else
+        {
+          //db.SANPHAMs.Add(sp);
+          cf.ExecuteNonQuery(string.Format("exec stored_ThemSanPham @TenSP = N'{0}', " +
+             "@NgayCapNhat = '{1}', @DonGia = {2}, @MoTa = {3}, @HinhAnh = {4}, " +
+             "@SoLuongTon = {5}, @LuotXem = {6}, @LuotBinhChon = {7}, @MaLoaiSP = {8}, @DaXoa = 0, " +
+             "@NgayDang = '{9}', @MaSuKien = {10} ", sp.TenSP, sp.NgayCapNhat, sp.DonGia, sp.MoTa, sp.HinhAnh,
+             sp.SoLuongTon, sp.LuotXem, sp.LuotBinhChon, sp.MaLoaiSP, sp.NgayDang, sp.MaSuKien));
+          //db.SaveChanges();
+          return RedirectToAction("Index");
+        }
+      }
+      if (loi > 0)
+      {
+        return View(sp);
+      }
+      sp.HinhAnh = HinhAnh[0].FileName;
 
                //Kiểm tra hình tổn tại trong csdl chưa
                if (HinhAnh[0].ContentLength > 0)
@@ -150,7 +156,7 @@ namespace WebApplication1.Controllers
                     }
                }
                cf.ExecuteNonQuery(string.Format("exec stored_ThemSanPham @TenSP = N'{0}', " +
-                      "@NgayCapNhat = '{1}', @DonGia = {2}, @MoTa = N'{3}', @HinhAnh = {4}, " +
+                      "@NgayCapNhat = '{1}', @DonGia = {2}, @MoTa = {3}, @HinhAnh = {4}, " +
                       "@SoLuongTon = {5}, @LuotXem = {6}, @LuotBinhChon = {7}, @MaLoaiSP = {8}, @DaXoa = 0, " +
                       "@NgayDang = '{9}', @MaSuKien = {10} ", sp.TenSP, sp.NgayCapNhat, sp.DonGia, sp.MoTa, sp.HinhAnh,
                       sp.SoLuongTon, sp.LuotXem, sp.LuotBinhChon, sp.MaLoaiSP, sp.NgayDang, sp.MaSuKien));
@@ -256,7 +262,7 @@ namespace WebApplication1.Controllers
                     return View(model);
                }
                cf.ExecuteNonQuery(string.Format("exec stored_SuaSanPham @MaSP={0},@TenSP = N'{1}', " +
-                      "@NgayCapNhat = '{2}', @DonGia = {3}, @MoTa = '{4}', @HinhAnh = '{5}', " +
+                      "@NgayCapNhat = '{2}', @DonGia = {3}, @MoTa = {4}, @HinhAnh = '{5}', " +
                       "@SoLuongTon = {6}, @LuotXem = {7}, @LuotBinhChon = {8}, @MaLoaiSP = {9}, " +
                       "@NgayDang = '{10}', @MaSuKien = {11} ", model.MaSP, model.TenSP, model.NgayCapNhat, model.DonGia,
                       model.MoTa, model.HinhAnh, model.SoLuongTon, model.LuotXem, model.LuotBinhChon, model.MaLoaiSP,

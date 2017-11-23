@@ -1,49 +1,17 @@
-﻿@*@{
+﻿
+@{
   ViewBag.Title = "Nhập thông tin máy server";
   //Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Thông tin máy server</h2>
 <form action="/home/show" method="post">
-  IP Address: <input type="text" name="ip" /><br />
-  Databasename: <input type="text" name="Databasename" /><br />
-  Username: <input type="text" name="usr" /><br />
-  Password: <input type="text" name="pwd" /><br />
-  <button>Show</button>
+    IP Address: <input type="text" name="ip" value="DESKTOP-2RV2058" /><br />
+    Databasename: <input type="text" name="Databasename" value="QuanLyBanHang123" /><br />
+    Username: <input type="text" name="usr" value="khachhang1" /><br />
+    Password: <input type="text" name="pwd" value="123" /><br />
+    <button>Show</button>
 </form>
-@section scripts{
-  <script>
-    $(function () {
-      var value = '@TempData["result"]';
-      if (value != '')
-      {
-        toastr.error(value);
-      }
-    });
-  </script>
-}*@
-
-
-<link href="~/Content/bootstrap.min.css" rel="stylesheet">
-<div class="container" style="text-align:center" >
-
-    <form class="form-signin" action="/home/show" method="post" style="padding-top:150px">
-        <h2 class="form-signin-heading">Please Login to Server Database</h2>
-      
-        <label for="inputIP" class="sr-only">IP Address:</label>
-        <input type="text" name="ip"  class="form-control" placeholder="IP address" required autofocus>
-        <label for="Databasename" class="sr-only">Databasename:</label>
-        <input type="text" name="Databasename" class="form-control" placeholder="Databasename" required autofocus>
-        <label for="inputIP" class="sr-only">Username:</label>
-        <input type="text" name="usr" class="form-control" placeholder="Username" required autofocus>
-        <label for="inputPassword" class="sr-only">Password: </label>
-        <input type="text" name="pwd" class="form-control" placeholder="Password" required>
-        <br />
-        <button class="btn btn-lg btn-primary btn-block">Show</button>
-    </form>
-
-</div> <!-- /container -->
-
 @section scripts{
     <script>
     $(function () {
@@ -53,7 +21,7 @@
         toastr.error(value);
       }
     });
-    </script>
+  </script>
 }
 
 
